@@ -1,0 +1,20 @@
+---
+id: "root"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../src/styles/styles.pcss"/>
+  <title>Добро пожаловать!</title>
+</head>
+<body>
+  <div id="{{ id }}">
+    {{> auth_form}}
+  </div>
+  <footer>
+    <!-- just to demonstrate implemented 404/5xx pages -->
+    Прочие страницы: <a href="../src/pages/404_page.hbs">404</a>, <a href="../src/pages/5xx_page.hbs">5xx</a>
+  </footer>
+</body>
+</html>

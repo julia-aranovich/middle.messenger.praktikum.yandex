@@ -1,0 +1,30 @@
+---
+id: "root"
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles/styles.pcss"/>
+  <title>Загрузите фото</title>
+</head>
+<body>
+<div id="{{id}}">
+  <div id="change-photo-modal-background"></div>
+  <div id="change-photo-modal">
+    <form>
+      <div class="field">
+        <h2>Загрузите фото</h2>
+      </div>
+      <div class="field">
+        <a>Выберите фото на компьютере</a>
+        <input type="file" name="avatar" />
+      </div>
+      {{> submit_button to="./profile_page.hbs" title="Сохранить"}}
+    </form>
+  </div>
+</div>
+</body>
+</html>
+

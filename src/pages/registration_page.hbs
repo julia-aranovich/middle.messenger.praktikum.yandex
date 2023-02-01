@@ -1,0 +1,34 @@
+---
+id: "root"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles/styles.pcss"/>
+  <title>Регистрация</title>
+</head>
+<body>
+<div id="{{id}}">
+  <div id="auth-form">
+    <form class="form">
+      {{> field name="email" label="Email" mandatory=true}}
+      {{> field name="login" label="Логин" mandatory=true}}
+      {{> field name="first_name" label="Имя"}}
+      {{> field name="second_name" label="Фамилия"}}
+      {{> field name="phone" label="Телефон"}}
+      {{> field name="password" type="password" label="Пароль" mandatory=true}}
+      {{> field name="repeatPassword" type="password" label="Повторите пароль" mandatory=true}}
+      {{> submit_button to="../../static/index.hbs" title="Зарегистрироваться"}}
+      <div class="actions">
+        <div><a href="../../static/index.hbs">Войти</a></div>
+      </div>
+    </form>
+  </div>
+</div>
+<footer>
+  <!-- just to demonstrate implemented 404/5xx pages -->
+  Прочие страницы: <a href="./404_page.hbs">404</a>, <a href="./5xx_page.hbs">5xx</a>
+</footer>
+</body>
+</html>

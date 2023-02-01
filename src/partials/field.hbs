@@ -1,0 +1,11 @@
+<div class="field">
+  <label for={{name}}>{{label}}{{#if mandatory}}<sup>*</sup>{{/if}}</label>
+  <input
+    type="{{#if type}}{{type}}{{else}}text{{/if}}"
+    name="{{name}}"
+    id="{{name}}"
+    value="{{value}}"
+    placeholder="{{placeholder}}"
+    {{#if disabled}}disabled{{/if}}
+  />
+</div>
