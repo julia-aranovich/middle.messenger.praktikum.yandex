@@ -1,3 +1,4 @@
 module.exports = {
-  partials: 'src/partials/'
+  partials: 'src/partials/',
+  helpers: 'src/helpers/'
 }

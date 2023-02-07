@@ -71,7 +71,7 @@ messages:
                 {{#if text}}
                   <div class="text">{{text}}</div>{{/if}}
                 {{#if img}}<img class="img" src="../../static/images/{{img}}"/>{{/if}}
-                <div class="date">{{created_at}}</div>
+                <div class="date">{{#if my}}{{getTime}}{{else}}{{created_at}}{{/if}}</div>
               </div>
             </div>
           {{/each}}
