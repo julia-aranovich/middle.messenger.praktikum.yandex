@@ -27,22 +27,24 @@ chats:
     last_updated: "3д назад"
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="../styles/styles.pcss"/>
   <title>Список чатов</title>
 </head>
 <body>
-<div id="{{id}}">
-  <div id="chat-list-container">
-    {{> chat_list chats=chats search=search}}
-    <div id="chat-view">
-      <div class="vertical-alignment-outer">
-        <div class="vertical-alignment-inner no-items">Выберите чат, чтобы написать сообщение</div>
+  <main>
+    <div id="{{id}}">
+      <div id="chat-list-container">
+        {{> chat_list chats=chats search=search}}
+        <div id="chat-view">
+          <div class="vertical-alignment-outer">
+            <div class="vertical-alignment-inner no-items">Выберите чат, чтобы написать сообщение</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </main>
 </body>
 </html>
