@@ -1,3 +1,5 @@
+@import './colors.pcss';
+
 html {
   margin: auto;
   font-family: system-ui, 'Segoe UI', Roboto, Cantarell,
@@ -37,7 +39,6 @@ h2 {
 
 p, ul {
   margin-bottom: 2em;
-  color: #1d1d1d;
 }
 
 sup {
@@ -47,6 +48,7 @@ sup {
   vertical-align: baseline;
   top: -0.5em;
 }
+
 pre, code {
   font-family: monospace, monospace;
   font-size: 1em;
@@ -56,11 +58,11 @@ a {
   outline: none;
   text-decoration: none;
   padding: 2px 1px 0;
-  color: blue;
+  color: var(--link-color);
   cursor: pointer;
 
   &:visited {
-    color: blue;
+    color: var(--link-color);
   }
 
   &:focus, a:hover {

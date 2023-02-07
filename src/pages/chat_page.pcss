@@ -1,3 +1,5 @@
+@import '../styles/colors.pcss';
+
 #chat-view {
   display: flex;
   flex-direction: column;
@@ -15,7 +17,7 @@
     display: flex;
     flex-direction: row;
     padding-bottom: 1em;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--border-color-light);
 
     .photo-preview, .meta {
       flex: 0 0 auto;
@@ -37,7 +39,7 @@
           list-style-type: none;
           padding: 0.5em 1em;
           margin: 0;
-          border: 1px solid #ccc;
+          border: 1px solid var(--border-color-light);
           border-radius: 5px;
           font-size: 0.6em;
           line-height: 1.5em;
@@ -61,7 +63,7 @@
 
   .chat-message-list {
     .current-data {
-      color: #ccc;
+      color: var(--secondary-font-color);
       font-size: 0.8em;
       line-height: 0.8em;
       text-align: center;
@@ -88,7 +90,7 @@
         }
 
         .date {
-          color: #ccc;
+          color: var(--secondary-font-color);
           font-size: 0.8em;
           line-height: 0.8em;
           padding-top: 0.5em;
@@ -110,7 +112,7 @@
 
   .chat-message-form {
     padding-top: 1em;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--border-color-light);
 
     form {
       display: flex;
