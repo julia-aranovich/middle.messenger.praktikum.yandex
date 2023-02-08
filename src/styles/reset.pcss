@@ -1,0 +1,88 @@
+@import "./colors.pcss";
+
+html {
+  margin: auto;
+  font-family: system-ui, "Segoe UI", Roboto, Cantarell,
+  "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  line-height: 1.75;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main {
+  flex: 1 0 auto;
+  padding: 2em 0;
+}
+
+header, footer {
+  border-top: 1px solid #22242626;
+  flex: 0 0 auto;
+  padding: 1em 0.5em;
+}
+
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+
+p, ul {
+  margin-bottom: 2em;
+}
+
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  top: -0.5em;
+}
+
+pre, code {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  padding: 2px 1px 0;
+  color: var(--link-color);
+  cursor: pointer;
+
+  &:visited {
+    color: var(--link-color);
+  }
+
+  &:focus, a:hover {
+    border-bottom: 1px solid;
+  }
+}
+
+/* Styles for vertical content alignment */
+.vertical-alignment-outer {
+  height: 100%;
+  position: relative;
+  text-align: center;
+
+  .vertical-alignment-inner {
+    height: 30px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+}

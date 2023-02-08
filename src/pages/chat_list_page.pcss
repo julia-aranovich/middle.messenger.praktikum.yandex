@@ -1,0 +1,17 @@
+@import "../styles/colors.pcss";
+
+#chat-list-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  #chat-view {
+    width: 70%;
+    overflow-y: scroll;
+
+    .no-items {
+      color: var(--secondary-font-color);
+      font-style: italic;
+    }
+  }
+}

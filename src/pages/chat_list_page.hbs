@@ -1,0 +1,50 @@
+---
+id: "root"
+
+chats:
+  -
+    title: "Класс Анны Ивановой"
+    unread: 4
+    last_updated: "1ч назад"
+  -
+    title: "Одноклассники (уч-ль Иванова)"
+    unread: 1
+    last_updated: "2ч назад"
+  -
+    title: "Павел Иванов"
+    last_updated: "3ч назад"
+  -
+    title: "Младшая группа д/с"
+    last_updated: "6ч назад"
+  -
+    title: "Ольга"
+    last_updated: "1д назад"
+  -
+    title: "just_login"
+    last_updated: "1д назад"
+  -
+    title: "Test Bot"
+    last_updated: "3д назад"
+---
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles/styles.pcss"/>
+  <title>Список чатов</title>
+</head>
+<body>
+  <main>
+    <div id="{{id}}">
+      <div id="chat-list-container">
+        {{> chat_list chats=chats search=search}}
+        <div id="chat-view">
+          <div class="vertical-alignment-outer">
+            <div class="vertical-alignment-inner no-items">Выберите чат, чтобы написать сообщение</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

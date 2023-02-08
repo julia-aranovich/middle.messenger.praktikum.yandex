@@ -1,0 +1,10 @@
+<div id="auth-form">
+  <form class="form">
+    {{> field name="login" label="Логин" mandatory=true}}
+    {{> field name="password" type="password" label="Пароль" mandatory=true}}
+    {{> submit_button to="../src/pages/chat_list_page.hbs" title="Войти"}}
+    <div class="actions">
+      <div><a href="../src/pages/registration_page.hbs">Зарегистрироваться</a></div>
+    </div>
+  </form>
+</div>
