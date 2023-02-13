@@ -17,8 +17,8 @@ export default function range(start = 0, end, step, isRight) {
     stepPre = step;
   }
 
-  let result = [];
-  for (let n = startPre; endPre < 0 ? n > endPre : n < endPre; n = n + stepPre) {
+  const result = [];
+  for (let n = startPre; endPre < 0 ? n > endPre : n < endPre; n += stepPre) {
     if (isRight) {
       result.unshift(n);
     } else {

@@ -50,8 +50,8 @@ export default function isEmpty(value) {
     (Array.isArray(value) ||
       typeof value === "string" ||
       typeof value.splice === "function" ||
-      isBuffer(value) ||
-      isTypedArray(value) ||
+      // isBuffer(value) ||
+      // isTypedArray(value) ||
       isArguments(value))
   ) {
     return !value.length;
@@ -66,6 +66,7 @@ export default function isEmpty(value) {
     return !Object.keys(value).length;
   }
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const key in value) {
     if (hasOwnProperty.call(value, key)) {
       return false;
