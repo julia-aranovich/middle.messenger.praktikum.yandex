@@ -1,37 +1,14 @@
----
-id: "root"
-email: "example@yandex.ru"
-login: "example_login"
-display_name: "JA"
-first_name: "Юлия"
-second_name: "Аранович"
-phone: "11111111111"
----
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="../styles/styles.pcss"/>
-  <title>Редактировать профиль</title>
-</head>
-<body>
-  <main>
-    <div id="{{id}}">
-      <div id="profile-form">
-        <div id="change-photo-form" class="form">
-          {{> photo_preview title=first_name size="large"}}
-        </div>
-        <form class="form">
-          {{> field name="email" label="Email" value=email mandatory=true}}
-          {{> field name="login" label="Логин" value=login mandatory=true}}
-          {{> field name="display_name" label="Имя в чате" value=display_name mandatory=true}}
-          {{> field name="first_name" label="Имя" value=first_name}}
-          {{> field name="second_name" label="Фамилия" value=second_name}}
-          {{> field name="phone" label="Телефон" value=phone}}
-          {{> submit_button to="./profile_page.hbs" title="Сохранить"}}
-        </form>
-      </div>
-    </div>
-  </main>
-</body>
-</html>
+<div id="profile-form">
+  <div id="change-photo-form" class="form">
+    {{> photoPreview title=first_name size="large"}}
+  </div>
+  <form class="form">
+    {{> field name="email" label="Email" value=email mandatory=true}}
+    {{> field name="login" label="Логин" value=login mandatory=true}}
+    {{> field name="display_name" label="Имя в чате" value=display_name mandatory=true}}
+    {{> field name="first_name" label="Имя" value=first_name}}
+    {{> field name="second_name" label="Фамилия" value=second_name}}
+    {{> field name="phone" label="Телефон" value=phone}}
+    {{> submitButton to="profilePage" title="Сохранить"}}
+  </form>
+</div>

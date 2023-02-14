@@ -1,15 +1,14 @@
-<link  rel="stylesheet" href="../partials/chat_list.pcss" />
 <div id="chat-list">
   <div class="profile-link-container">
-    <a href="./profile_page.hbs">Мой профиль</a>
+    <a onclick="goTo('profilePage')">Мой профиль</a>
   </div>
   <div class="form">
     {{> field name="search" value=search placeholder="Поиск по чатам"}}
   </div>
   <div class="chat-blocks">
     {{#each chats}}
-      <a class="chat-block {{#if unread}}unread{{/if}} {{#if selected}}selected{{/if}}" href="./chat_page.hbs">
-        {{> photo_preview title=title}}
+      <a class="chat-block {{#if unread}}unread{{/if}} {{#if selected}}selected{{/if}}" onclick="goTo('chatPage')">
+        {{> photoPreview title=title}}
         <div class="title">{{title}}</div>
         <div class="meta">
 

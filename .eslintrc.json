@@ -8,6 +8,10 @@
     "one-var": ["error", {"let": "consecutive", "const": "never"}],
     "one-var-declaration-per-line": ["error", "initializations"],
     "operator-linebreak": ["error", "after"],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "object-curly-spacing": 0
+  },
+  "env": {
+    "browser": true
   }
 }

@@ -1,47 +1,24 @@
----
-id: "root"
-email: "example@yandex.ru"
-login: "example_login"
-display_name: "JA"
-first_name: "Юлия"
-second_name: "Аранович"
-phone: "11111111111"
----
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="../styles/styles.pcss"/>
-  <title>Мой профиль</title>
-</head>
-<body>
-  <main>
-    <div id="{{id}}">
-      <div id="profile-form">
-        <div id="change-photo-form" class="form">
-          {{> photo_preview title=first_name size="large"}}
-          <div class="actions">
-            <div><a href="./change_photo_modal.hbs">Загрузить фото</a></div>
-          </div>
-        </div>
-        <form class="form">
-          {{> field name="email" label="Email" value=email disabled=true}}
-          {{> field name="login" label="Логин" value=login disabled=true}}
-          {{> field name="display_name" label="Имя в чате" value=display_name disabled=true}}
-          {{> field name="first_name" label="Имя" value=first_name disabled=true}}
-          {{> field name="second_name" label="Фамилия" value=second_name disabled=true}}
-          {{> field name="phone" label="Телефон" value=phone disabled=true}}
-          <div class="actions">
-            <div><a href="./profile_edit_page.hbs">Изменить данные</a></div>
-            <div><a href="./edit_password_page.hbs">Изменить пароль</a></div>
-            <div>&nbsp;</div>
-            <div><a href="./chat_list_page.hbs">Назад к чатам</a></div>
-            <div>&nbsp;</div>
-            <div><a href="../../static/index.hbs">Выйти</a></div>
-          </div>
-        </form>
-      </div>
+<div id="profile-form">
+  <div id="change-photo-form" class="form">
+    {{> photoPreview title=first_name size="large"}}
+    <div class="actions">
+      <div><a onclick="goTo('changePhotoPage')">Загрузить фото</a></div>
     </div>
-  </main>
-</body>
-</html>
+  </div>
+  <form class="form">
+    {{> field name="email" label="Email" value=email disabled=true}}
+    {{> field name="login" label="Логин" value=login disabled=true}}
+    {{> field name="display_name" label="Имя в чате" value=display_name disabled=true}}
+    {{> field name="first_name" label="Имя" value=first_name disabled=true}}
+    {{> field name="second_name" label="Фамилия" value=second_name disabled=true}}
+    {{> field name="phone" label="Телефон" value=phone disabled=true}}
+    <div class="actions">
+      <div><a onclick="goTo('profileEditPage')">Изменить данные</a></div>
+      <div><a onclick="goTo('passwordEditPage')">Изменить пароль</a></div>
+      <div>&nbsp;</div>
+      <div><a onclick="goTo('chatListPage')">Назад к чатам</a></div>
+      <div>&nbsp;</div>
+      <div><a onclick="goTo('authPage')">Выйти</a></div>
+    </div>
+  </form>
+</div>

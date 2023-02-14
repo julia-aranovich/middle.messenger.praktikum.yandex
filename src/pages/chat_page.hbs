@@ -1,97 +1,48 @@
----
-id: "root"
-
-search: "Иванов"
-chat:
-  title: "Класс Анны Ивановой"
-  members_count: 45
-chats:
-  -
-    title: "Класс Анны Ивановой"
-    last_updated: "19:48"
-    selected: "selected"
-  -
-    title: "Одноклассники (уч-ль Иванова)"
-    unread: 1
-    last_updated: "2ч назад"
-  -
-    title: "Павел Иванов"
-    last_updated: "3ч назад"
-messages:
-  -
-    author: "Анна"
-    text: "Привет! Ты получила мое последнее сообщение?"
-    created_at: "19:46"
-  -
-    author: "Ольга"
-    text: ""
-    created_at: "19:47"
-    img: "img_placeholder.png"
-  -
-    author: "me"
-    text: "Привет! Да, конечно) Очень крутое фото!"
-    created_at: "19:48"
-    my: true
----
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="../styles/styles.pcss"/>
-  <title>Список чатов</title>
-</head>
-<body>
-  <main>
-    <div id="{{id}}">
-      <div id="chat-list-container">
-        {{> chat_list chats=chats search=search}}
-        <div id="chat-view">
-          {{#with chat}}
-            <div class="chat-title-container">
-              {{> photo_preview title=title size="medium"}}
-              <div class="title">
-                <div>{{title}}</div>
-                <a class="members-count">{{members_count}}  участников</a>
-                <ul class="members-menu">
-                  <li><a>Посмотреть список участников</a></li>
-                  <li><a>Добавить участника</a></li>
-                  <li><a>Удалить участника</a></li>
-                  <li><a href="./chat_list_page.hbs">Выйти из чата</a></li>
-                </ul>
-              </div>
-            </div>
-          {{/with}}
-          <div class="chat-message-list">
-            <div class="current-data">6 февраля</div>
-            <div class="message-list">
-              {{#each messages}}
-                <div class="message-block-wrapper {{#if my}}message-sent{{/if}}">
-                  <div class="message-block">
-                    {{#unless my}}
-                      <div class="author">{{author}}:</div>{{/unless}}
-                    {{#if text}}
-                      <div class="text">{{text}}</div>{{/if}}
-                    {{#if img}}<img class="img" src="../../static/images/{{img}}"/>{{/if}}
-                    <div class="date">{{#if my}}{{getTime}}{{else}}{{created_at}}{{/if}}</div>
-                  </div>
-                </div>
-              {{/each}}
-            </div>
-          </div>
-          <div class="chat-message-form">
-            <form>
-              <button>
-                <img src="../../static/icons/icon_attach.svg" alt="Прикрепить изображение"/>
-              </button>
-              <textarea id="message" name="message" class="message-textarea"></textarea>
-              <button>
-                <img src="../../static/icons/icon_arrow_right.svg" alt="Отправить сообщение"/>
-              </button>
-            </form>
-          </div>
+<div id="chat-list-container">
+  {{> chatList chats=chats search=search}}
+  <div id="chat-view">
+    {{#with chat}}
+      <div class="chat-title-container">
+        {{> photoPreview title=title size="medium"}}
+        <div class="title">
+          <div>{{title}}</div>
+          <a class="members-count">{{members_count}}  участников</a>
+          <ul class="members-menu">
+            <li><a>Посмотреть список участников</a></li>
+            <li><a>Добавить участника</a></li>
+            <li><a>Удалить участника</a></li>
+            <li><a onclick="goTo('chatListPage')">Выйти из чата</a></li>
+          </ul>
         </div>
       </div>
+    {{/with}}
+    <div class="chat-message-list">
+      <div class="current-data">6 февраля</div>
+      <div class="message-list">
+        {{#each messages}}
+          <div class="message-block-wrapper {{#if my}}message-sent{{/if}}">
+            <div class="message-block">
+              {{#unless my}}
+                <div class="author">{{author}}:</div>{{/unless}}
+              {{#if text}}
+                <div class="text">{{text}}</div>{{/if}}
+              {{#if img}}<img class="img" src="../../static/images/{{img}}"/>{{/if}}
+              <div class="date">{{#if my}}{{getTime}}{{else}}{{created_at}}{{/if}}</div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
     </div>
-  </main>
-</body>
-</html>
+    <div class="chat-message-form">
+      <form>
+        <button>
+          <img src="../../static/icons/icon_attach.svg" alt="Прикрепить изображение"/>
+        </button>
+        <textarea id="message" name="message" class="message-textarea"></textarea>
+        <button>
+          <img src="../../static/icons/icon_arrow_right.svg" alt="Отправить сообщение"/>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
