@@ -1,5 +1,5 @@
-export default function range(start = 0, end, step, isRight) {
-  let startPre, endPre, stepPre;
+export default function range(start: number = 0, end?: number, step?: number, isRight?: boolean): number[] {
+  let startPre: number, endPre: number, stepPre: number;
   const DEFAULT_START = 0;
   const DEFAULT_STEP = 1;
 
@@ -9,10 +9,12 @@ export default function range(start = 0, end, step, isRight) {
     stepPre = start >= 0 ? DEFAULT_STEP : DEFAULT_STEP * -1;
   } else if (step === undefined) {
     startPre = start;
+    // @ts-ignore
     endPre = end;
     stepPre = DEFAULT_STEP;
   } else {
     startPre = start;
+    // @ts-ignore
     endPre = end;
     stepPre = step;
   }

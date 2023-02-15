@@ -1,4 +1,4 @@
-function isLength(value) {
+function isLength(value: any): boolean {
   return (
     typeof value === "number" &&
     value > -1 &&
@@ -7,19 +7,19 @@ function isLength(value) {
   );
 }
 
-function isNil(value) {
+function isNil(value: any): boolean {
   return value === null || value === undefined;
 }
 
-function isArrayLike(value) {
+function isArrayLike(value: any): boolean {
   return !isNil(value) && typeof value !== "function" && isLength(value.length);
 }
 
-function isObjectLike(value) {
+function isObjectLike(value: any): boolean {
   return typeof value === "object" && value !== null;
 }
 
-function getTag(value) {
+function getTag(value: any): string {
   if (value === null) {
     return value === undefined ? "[object Undefined]" : "[object Null]";
   }
@@ -28,19 +28,19 @@ function getTag(value) {
 
 const objectProto = Object.prototype;
 
-function isPrototype(value) {
+function isPrototype(value: any): boolean {
   const ctor = value && value.constructor;
   const proto = (typeof ctor === "function" && ctor.prototype) || objectProto;
 
   return value === proto;
 }
 
-function isArguments(value) {
+function isArguments(value: any): boolean {
   return isObjectLike(value) && getTag(value) === "[object Arguments]";
 }
 
 // Реализация лодаша
-export default function isEmpty(value) {
+export default function isEmpty(value: any): boolean {
   if (value === null) {
     return true;
   }
@@ -68,7 +68,7 @@ export default function isEmpty(value) {
 
   // eslint-disable-next-line no-restricted-syntax
   for (const key in value) {
-    if (hasOwnProperty.call(value, key)) {
+    if (Object.hasOwnProperty.call(value, key)) {
       return false;
     }
   }

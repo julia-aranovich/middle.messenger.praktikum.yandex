@@ -18,18 +18,19 @@ import photoPreview from "./partials/photo_preview.hbs";
 
 import {PROFILE, CHAT_LIST_DATA, CHAT_PAGE_DATA} from "./data";
 
-// register partials
-Handlebars.registerPartial("field", field);
-Handlebars.registerPartial("submitButton", submitButton);
-Handlebars.registerPartial("chatList", chatList);
-Handlebars.registerPartial("photoPreview", photoPreview);
+import {JSONObject} from "./types";
 
-function render(html) {
+import HTTPTransport from "./fetch";
+
+Handlebars.registerPartial({field, submitButton, chatList, photoPreview});
+
+function render(html: string) {
   const app = document.querySelector("#root");
-  app.innerHTML = html;
+  app!.innerHTML = html;
 }
 
-const PAGES = {
+type PageDict = Record<string, Function>;
+const PAGES: PageDict = {
   authPage,
   registrationPage,
   profilePage,
@@ -42,7 +43,7 @@ const PAGES = {
   notFoundPage,
 };
 
-const CONTEXTS = {
+const CONTEXTS: JSONObject = {
   profilePage: PROFILE,
   profileEditPage: PROFILE,
   passwordEditPage: PROFILE,
@@ -51,13 +52,13 @@ const CONTEXTS = {
 };
 
 // simulate router
-window.goTo = (pageName) => {
+window.goTo = (pageName: string): void => {
   if (!PAGES[pageName]) {
     throw new Error(`Route ${pageName} not found`);
   }
   render(PAGES[pageName](CONTEXTS[pageName] || {}));
-  return false;
 };
+
 window.addEventListener("DOMContentLoaded", () => {
   const html = authPage();
   render(html);

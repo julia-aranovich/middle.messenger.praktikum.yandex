@@ -1,3 +1,7 @@
+import imgDefault from '../static/images/img_placeholder.png';
+import iconAttach from '../static/icons/icon_attach.svg';
+import iconArrowRight from '../static/icons/icon_arrow_right.svg';
+
 export const PROFILE = {
   email: "example@yandex.ru",
   login: "example_login",
@@ -46,7 +50,7 @@ const MESSAGES = [
     author: "Ольга",
     text: "",
     created_at: "19:47",
-    img: "img_placeholder.png",
+    img: imgDefault,
   }, {
     author: "me",
     text: "Привет! Да, конечно) Очень крутое фото!",
@@ -64,4 +68,6 @@ export const CHAT_PAGE_DATA = {
   chat: CHATS[0],
   search: SEARCH,
   messages: MESSAGES,
+  iconAttach,
+  iconArrowRight
 };

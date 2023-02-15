@@ -1,5 +1,5 @@
-export default function first(list) {
+export default function last(list: any[]): any {
   if (!Array.isArray(list)) return undefined;
   if (!list.length) return undefined;
-  return list[0];
+  return list[list.length - 1];
 }
