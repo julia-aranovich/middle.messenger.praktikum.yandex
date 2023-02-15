@@ -20,8 +20,6 @@ import {PROFILE, CHAT_LIST_DATA, CHAT_PAGE_DATA} from "./data";
 
 import {JSONObject} from "./types";
 
-import HTTPTransport from "./fetch";
-
 Handlebars.registerPartial({field, submitButton, chatList, photoPreview});
 
 function render(html: string) {
