@@ -6,7 +6,7 @@
     "dev": "parcel static/index.html --no-cache --open",
     "build": "parcel build static/index.html --no-cache",
     "start": "parcel build static/index.html --no-cache && node server.js",
-    "lint": "node_modules/.bin/eslint . && node_modules/.bin/stylelint ."
+    "lint": "node_modules/.bin/eslint . --ext .js,.ts && node_modules/.bin/stylelint ."
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "@typescript-eslint/parser": "5.52.0",
     "eslint": "8.34.0",
     "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "17.0.0",
     "parcel": "2.8.3",
     "postcss": "8.4.21",
     "postcss-nested": "6.0.0",

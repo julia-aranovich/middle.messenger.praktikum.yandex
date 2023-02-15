@@ -1,3 +1,3 @@
-export default function identity(value: any) {
+export default function identity<T>(value: T): T {
   return value;
 }

@@ -1,12 +1,5 @@
 import {JSONObject} from "./types";
 
-const METHODS = {
-  GET: "GET",
-  POST: "POST",
-  PUT: "PUT",
-  DELETE: "DELETE"
-};
-
 function queryStringify(obj: any, prefix?: string): string {
   if (typeof obj !== "object") {
     throw new Error("Query data must be object");
@@ -22,43 +15,50 @@ function queryStringify(obj: any, prefix?: string): string {
   return `${!prefix && "?"}${result.join("&")}`;
 }
 
-type Options = {
-  headers?: Record<string, string>;
-  method?: string;
-  timeout?: number;
-  data?: JSONObject;
+enum Methods {
+  GET = "GET",
+  POST = "POST",
+  PUT = "PUT",
+  DELETE = "DELETE"
 }
 
-type OptionsWithoutMethod = Omit<Options, 'method'>;
+type Options = {
+  headers?: Record<string, string>;
+  method?: Methods;
+  timeout?: number;
+  data?: JSONObject;
+};
+
+type OptionsWithoutMethod = Omit<Options, "method">;
 
 export default class HTTPTransport {
   get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.request(url, {...options, method: METHODS.GET});
+    return this.request(url, {...options, method: Methods.GET});
   }
 
   post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.request(url, {...options, method: METHODS.POST});
+    return this.request(url, {...options, method: Methods.POST});
   }
 
   put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.request(url, {...options, method: METHODS.PUT});
+    return this.request(url, {...options, method: Methods.PUT});
   }
 
   delete(url:string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.request(url, {...options, method: METHODS.DELETE});
+    return this.request(url, {...options, method: Methods.DELETE});
   }
 
   request(url: string, options: Options = {}): Promise<XMLHttpRequest> {
-    const {headers = {}, method = METHODS.GET, timeout = 5000, data} = options;
+    const {
+      headers = {},
+      method = Methods.GET,
+      timeout = 5000,
+      data
+    } = options;
 
     return new Promise((resolve, reject) => {
-      if (!method) {
-        reject(new Error("No method"));
-        return;
-      }
-
       const xhr = new XMLHttpRequest();
-      const isGet = method === METHODS.GET;
+      const isGet = method === Methods.GET;
 
       xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
 
@@ -82,12 +82,12 @@ export default class HTTPTransport {
         xhr.send(JSON.stringify(data));
       }
     });
-  };
+  }
 }
 
 type OptionsWithRetries = Options & {
   retries: number;
-}
+};
 
 export function fetchWithRetry(url: string, options: OptionsWithRetries): Promise<XMLHttpRequest> {
   const {retries = 5, ...fetchOptions} = options;

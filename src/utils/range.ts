@@ -1,4 +1,9 @@
-export default function range(start: number = 0, end?: number, step?: number, isRight?: boolean): number[] {
+export default function range(
+  start: number = 0,
+  end?: number,
+  step?: number,
+  isRight?: boolean
+): number[] {
   let startPre: number, endPre: number, stepPre: number;
   const DEFAULT_START = 0;
   const DEFAULT_STEP = 1;

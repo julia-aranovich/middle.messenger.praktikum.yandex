@@ -1,11 +1,13 @@
 enum Events {
   onCLick = "onclick"
-};
-
-type Listeners = Record<string, Function[]>;
+}
 
 export default class EventBus {
-  listeners: Listeners = {}
+  listeners: Record<string, Function[]>;
+
+  constructor() {
+    this.listeners = {};
+  }
 
   on(event: Events, callback: Function): void {
     if (!this.listeners[event]) {
@@ -25,9 +27,9 @@ export default class EventBus {
     );
   }
 
-  emit(event: Events, ...args: any[]): void {
+  emit(event: Events, ...args: unknown[]): void {
     if (!this.listeners[event]) {
-      throw new Event(`Нет события: ${event}`);
+      throw new Error(`Нет события: ${event}`);
     }
 
     this.listeners[event].forEach((listener) => {

@@ -1,6 +1,7 @@
 export {};
+
 declare global {
   interface Window {
-    goTo: Function;
+    goTo(pageName: string): void;
   }
 }

@@ -20,7 +20,12 @@ import {PROFILE, CHAT_LIST_DATA, CHAT_PAGE_DATA} from "./data";
 
 import {JSONObject} from "./types";
 
-Handlebars.registerPartial({field, submitButton, chatList, photoPreview});
+Handlebars.registerPartial({
+  field,
+  submitButton,
+  chatList,
+  photoPreview
+});
 
 function render(html: string) {
   const app = document.querySelector("#root");
@@ -38,7 +43,7 @@ const PAGES: PageDict = {
   chatListPage,
   chatPage,
   serverErrorPage,
-  notFoundPage,
+  notFoundPage
 };
 
 const CONTEXTS: JSONObject = {
@@ -46,7 +51,7 @@ const CONTEXTS: JSONObject = {
   profileEditPage: PROFILE,
   passwordEditPage: PROFILE,
   chatListPage: CHAT_LIST_DATA,
-  chatPage: CHAT_PAGE_DATA,
+  chatPage: CHAT_PAGE_DATA
 };
 
 // simulate router
