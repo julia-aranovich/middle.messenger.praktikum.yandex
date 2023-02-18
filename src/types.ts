@@ -14,3 +14,5 @@ export interface JSONObject {
 }
 
 export interface JSONArray extends Array<JSONValue> { }
+
+export type Props = Record<string, any>;

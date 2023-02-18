@@ -1,0 +1,15 @@
+<form>
+  {{#each fields}}
+    {{{this}}}
+  {{/each}}
+  <div class="field">
+    {{{submitButton}}}
+  </div>
+  {{#if actions}}
+    <div class="actions">
+      {{#each actions}}
+        {{{this}}}
+      {{/each}}
+    </div>
+  {{/if}}
+</form>

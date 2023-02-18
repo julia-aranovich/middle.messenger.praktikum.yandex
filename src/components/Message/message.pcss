@@ -1,0 +1,38 @@
+.message-block-wrapper {
+  .message-block {
+    border: 1px solid #eee;
+    border-radius: 3px;
+    padding: 0.5em 1em;
+    margin-bottom: 1em;
+    display: inline-block;
+
+    .author {
+      font-size: 1em;
+      line-height: 1em;
+      font-weight: 600;
+    }
+
+    img {
+      margin-top: 0.5em;
+      max-width: 300px;
+    }
+
+    .date {
+      color: var(--secondary-font-color);
+      font-size: 0.8em;
+      line-height: 0.8em;
+      padding-top: 0.5em;
+      text-align: right;
+    }
+  }
+
+  &.message-sent {
+    text-align: right;
+
+    .message-block {
+      background-color: #eee;
+      margin-left: 30%;
+      margin-right: 0;
+    }
+  }
+}
