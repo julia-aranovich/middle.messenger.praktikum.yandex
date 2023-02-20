@@ -1,6 +1,7 @@
 import Block from "../../utils/Block";
 
 import Sidebar from "../../components/Sidebar";
+import Form from "../../components/Form";
 import Avatar, {AVATAR_SIZES} from "../../components/Avatar";
 import Message, {MessageProps} from "../../components/Message";
 import NewMessageForm from "../../components/NewMessageForm";
@@ -23,7 +24,7 @@ export default class ChatPage extends Block {
       events: {
         submit: (e: Event) => {
           e.preventDefault();
-          this.children.form.logData();
+          (<Form> this.children.form).logData();
         }
       }
     });

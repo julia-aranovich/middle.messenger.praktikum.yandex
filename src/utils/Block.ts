@@ -1,7 +1,7 @@
 import {v4 as makeUUID} from "uuid";
 
 import EventBus from "./EventBus";
-import {Props} from "../types";
+import {Props} from "./types";
 
 type Children = Record<string, Block>;
 export default class Block {
@@ -16,10 +16,6 @@ export default class Block {
 
   private _element: HTMLElement | null = null;
 
-  private _meta: {
-    props: Props
-  };
-
   private eventBus: () => EventBus;
 
   props: Props;
@@ -30,7 +26,6 @@ export default class Block {
     const {children, props} = this._getChildren(propsAndChildren);
     this.children = children;
     this.props = this._makePropsProxy({ ...props, id: this.id});
-    this._meta = {props};
 
     const eventBus = new EventBus();
     this.eventBus = () => eventBus;
@@ -43,7 +38,7 @@ export default class Block {
     const children: Children = {};
     const props: Props = {};
 
-    Object.entries(propsAndChildren).forEach(([key, value]: [string, any]) => {
+    Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
       } else {
@@ -57,7 +52,7 @@ export default class Block {
   _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    // @ts-ignore
+    // @ts-ignore Miss args declaration here, just context binding
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
@@ -135,7 +130,7 @@ export default class Block {
   }
 
   componentDidUpdate(oldProps: Props, newProps: Props) {
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-console
     console.log(oldProps, newProps);
     return true;
   }
@@ -169,8 +164,7 @@ export default class Block {
   }
 
   private _render() {
-    // @ts-ignore
-    const fragment = this.render() as HTMLTemplateElement;
+    const fragment = this.render() as unknown as HTMLTemplateElement;
     const newElement = fragment.firstElementChild as HTMLElement;
     if (this._element) {
       this._removeEvents();
@@ -179,6 +173,8 @@ export default class Block {
     this._element = newElement;
     this._addEvents();
   }
+
+  protected render() {}
 
   getContent() {
     return this.element;

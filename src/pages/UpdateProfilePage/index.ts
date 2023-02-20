@@ -20,8 +20,8 @@ export default class UpdateProfilePage extends Block {
       events: {
         submit: (e: Event) => {
           e.preventDefault();
-          this.children.form.logData();
-          if (this.children.form.isValid()) {
+          (<Form> this.children.form).logData();
+          if ((<Form> this.children.form).isValid()) {
             window.renderPage(PROFILE_PAGE);
           }
         }

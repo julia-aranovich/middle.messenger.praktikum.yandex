@@ -1,4 +1,4 @@
-import {JSONObject} from "../types";
+import {JSONObject} from "./types";
 
 function queryStringify(obj: any, prefix?: string): string {
   if (typeof obj !== "object") {

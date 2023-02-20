@@ -23,8 +23,8 @@ export default class ChangePasswordPage extends Block {
           events: {
             click: (e: Event) => {
               e.preventDefault();
-              this.children.form.logData();
-              if (this.children.form.isValid()) {
+              (<Form> this.children.form).logData();
+              if ((<Form> this.children.form).isValid()) {
                 window.renderPage(LOGIN_PAGE);
               }
             }

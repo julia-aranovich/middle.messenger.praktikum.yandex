@@ -15,8 +15,8 @@ export default class LoginPage extends Block {
       events: {
         submit: (e: Event) => {
           e.preventDefault();
-          this.children.form.logData();
-          if (this.children.form.isValid()) {
+          (<Form> this.children.form).logData();
+          if ((<Form> this.children.form).isValid()) {
             window.renderPage(CHAT_LIST_PAGE);
           }
         }

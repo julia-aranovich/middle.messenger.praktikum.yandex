@@ -8,7 +8,7 @@ import ChatPage from "../pages/ChatPage";
 import ServerErrorPage from "../pages/ServerErrorPage";
 import NotFoundPage from "../pages/NotFoundPage";
 
-import {Props} from "../types";
+import {Props} from "./types";
 
 import {CHAT_LIST_DATA, CHAT_PAGE_DATA, PROFILE} from "./data";
 import {

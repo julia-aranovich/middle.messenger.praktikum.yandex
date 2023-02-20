@@ -1,5 +1,7 @@
 import Block from "../../utils/Block";
 
+import Field from "../Field";
+
 import template from "./form.hbs";
 import "./form.pcss";
 
@@ -9,12 +11,12 @@ export default class Form extends Block {
   }
 
   get data() {
-    return this.children.fields.reduce((
+    return (<Field[]><unknown> this.children.fields).reduce((
       result: Record<string, string>,
       field: Block
     ) => ({
       ...result,
-      ...{[field.props!.name]: field.getValue()}
+      ...{[field.props!.name]: (<Field>field).getValue()}
     }), {});
   }
 
@@ -25,8 +27,8 @@ export default class Form extends Block {
 
   isValid(): boolean {
     let result = true;
-    this.children.fields.forEach((field: Block) => {
-      result = field.isValid() && result;
+    (<Field[]><unknown> this.children.fields).forEach((field: Block) => {
+      result = (<Field>field).isValid() && result;
     });
     return result;
   }
