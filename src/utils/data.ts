@@ -54,7 +54,6 @@ const MESSAGES = [
   }, {
     author: "me",
     text: "Привет! Да, конечно) Очень крутое фото!",
-    created_at: "19:48",
     my: true
   }
 ];

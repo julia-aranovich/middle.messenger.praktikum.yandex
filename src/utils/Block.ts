@@ -34,7 +34,7 @@ export default class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _getChildren(propsAndChildren: Props) {
+  private _getChildren(propsAndChildren: Props) {
     const children: Children = {};
     const props: Props = {};
 
@@ -49,7 +49,7 @@ export default class Block {
     return {children, props};
   }
 
-  _registerEvents(eventBus: EventBus) {
+  private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     // @ts-ignore Miss args declaration here, just context binding
@@ -57,7 +57,7 @@ export default class Block {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _init() {
+  private _init() {
     this.init();
 
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
@@ -117,11 +117,11 @@ export default class Block {
 
   protected componentDidMount() {}
 
-  dispatchComponentDidMount() {
+  public dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps: Props, newProps: Props) {
+  private _componentDidUpdate(oldProps: Props, newProps: Props) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -129,13 +129,11 @@ export default class Block {
     this._render();
   }
 
-  componentDidUpdate(oldProps: Props, newProps: Props) {
-    // eslint-disable-next-line no-console
-    console.log(oldProps, newProps);
+  protected componentDidUpdate(_oldProps: Props, _newProps: Props) {
     return true;
   }
 
-  setProps = (nextProps: Props) => {
+  public setProps = (nextProps: Props) => {
     if (!nextProps) {
       return;
     }
@@ -147,7 +145,7 @@ export default class Block {
     return this._element as HTMLElement;
   }
 
-  _addEvents() {
+  private _addEvents() {
     const {events = {}} = this.props;
 
     Object.keys(events).forEach((eventName: string) => {

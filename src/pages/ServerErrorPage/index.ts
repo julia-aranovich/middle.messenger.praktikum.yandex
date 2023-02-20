@@ -8,7 +8,7 @@ import template from "./server_error_page.hbs";
 export default class ServerErrorPage extends Block {
   init() {
     this.children.loginLink = new Button({
-      text: "Назад к чатам",
+      text: "Назад",
       secondary: true,
       events: {
         click: () => window.renderPage(LOGIN_PAGE)

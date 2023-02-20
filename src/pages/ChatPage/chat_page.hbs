@@ -1,9 +1,9 @@
 <div id="chat-list-container">
   {{{sidebar}}}
   <div id="chat-view">
-    {{#with chat}}
-      <div class="chat-title-container">
-        {{{avatar}}}
+    <div class="chat-title-container">
+      {{{avatar}}}
+      {{#with chat}}
         <div class="title">
           <div>{{title}}</div>
           <a class="members-count">{{members_count}} участников</a>
@@ -14,12 +14,14 @@
             <li><a onclick="renderPage('chats')">Выйти из чата</a></li>
           </ul>
         </div>
-      </div>
-    {{/with}}
+      {{/with}}
+    </div>
     <div class="chat-message-list">
       <div class="current-data">26 февраля</div>
       <div class="message-list">
-        {{{messages}}}
+        {{#each messages}}
+          {{{this}}}
+        {{/each}}
       </div>
     </div>
     <div class="chat-message-form-wrapper">

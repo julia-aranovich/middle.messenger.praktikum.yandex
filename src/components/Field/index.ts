@@ -16,8 +16,8 @@ export default class Field extends Block {
 
   isValid(): boolean {
     const value = this.getValue();
-    const error = (this.props.mandatory && !value) ||
-      (!!this.props.regex && !new RegExp(this.props.regex).test(value));
+    const regexError = !!this.props.regex && !new RegExp(this.props.regex).test(value);
+    const error = this.props.mandatory ? !value || regexError : !!value && regexError;
     this.setProps({...this.props, error});
     return !error;
   }
