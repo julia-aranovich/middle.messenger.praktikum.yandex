@@ -9,7 +9,7 @@ export default class ChangeAvatarModal extends Block {
     this.children.submitButton = new Button({
       text: "Сохранить",
       events: {
-        click: (e: Event) => {
+        click: (e: Event): void => {
           e.preventDefault();
           this.setProps({isVisible: false});
         }

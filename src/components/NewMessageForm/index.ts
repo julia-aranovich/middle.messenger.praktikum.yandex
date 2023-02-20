@@ -4,7 +4,7 @@ import template from "./new_message_form.hbs";
 import "./new_message_form.pcss";
 
 export default class NewMessageForm extends Form {
-  get data() {
+  get data(): {message: string} {
     return {
       message: (<HTMLInputElement> this.getContent().querySelector("[name=message]")).value
     };

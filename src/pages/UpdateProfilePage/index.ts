@@ -30,7 +30,7 @@ export default class UpdateProfilePage extends Block {
         submitButton: new Button({
           text: "Сохранить"
         }),
-        fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps) => new Field({
+        fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps): Block => new Field({
           ...field,
           value: this.props[field.name]
         }))

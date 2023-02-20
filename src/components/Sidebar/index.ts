@@ -25,7 +25,7 @@ export default class Sidebar extends Block {
       }
     });
     this.children.chats = this.props.chats.map(
-      (chat: ChatProps) => new ChatPreview({
+      (chat: ChatProps): Block => new ChatPreview({
         ...chat,
         events: {
           click: () => window.renderPage(CHAT_PAGE)

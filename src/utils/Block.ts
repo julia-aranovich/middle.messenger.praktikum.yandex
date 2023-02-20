@@ -66,7 +66,7 @@ export default class Block {
   protected init() {}
 
   private _replaceStub(fragment: HTMLTemplateElement, child: Block) {
-    const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+    const stub: HTMLElement | null = fragment.content.querySelector(`[data-id="${child.id}"]`);
     if (!stub) {
       return;
     }
@@ -79,7 +79,7 @@ export default class Block {
 
     Object.entries(this.children).forEach(([name, child]: [string, Block | Block[]]) => {
       if (Array.isArray(child)) {
-        propsAndStubs[name] = child.map((childEl) => `<div data-id="${childEl.id}"></div>`);
+        propsAndStubs[name] = child.map((childEl: Block) => `<div data-id="${childEl.id}"></div>`);
       } else {
         propsAndStubs[name] = `<div data-id="${child.id}"></div>`;
       }
@@ -101,7 +101,7 @@ export default class Block {
     return fragment.content;
   }
 
-  private _componentDidMount() {
+  private _componentDidMount(): void {
     this.componentDidMount();
 
     Object.values(this.children).forEach((child: Block | Block[]) => {
@@ -115,25 +115,26 @@ export default class Block {
     });
   }
 
-  protected componentDidMount() {}
+  protected componentDidMount(): void {}
 
-  public dispatchComponentDidMount() {
+  public dispatchComponentDidMount(): void {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps: Props, newProps: Props) {
-    const response = this.componentDidUpdate(oldProps, newProps);
+  private _componentDidUpdate(oldProps: Props, newProps: Props): void {
+    const response: boolean = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
     }
     this._render();
   }
 
-  protected componentDidUpdate(_oldProps: Props, _newProps: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected componentDidUpdate(_oldProps: Props, _newProps: Props): boolean {
     return true;
   }
 
-  public setProps = (nextProps: Props) => {
+  public setProps = (nextProps: Props): void => {
     if (!nextProps) {
       return;
     }
@@ -145,7 +146,7 @@ export default class Block {
     return this._element as HTMLElement;
   }
 
-  private _addEvents() {
+  private _addEvents(): void {
     const {events = {}} = this.props;
 
     Object.keys(events).forEach((eventName: string) => {
@@ -153,7 +154,7 @@ export default class Block {
     });
   }
 
-  _removeEvents() {
+  _removeEvents(): void {
     const {events = {}} = this.props;
 
     Object.keys(events).forEach((eventName: string) => {
@@ -161,7 +162,7 @@ export default class Block {
     });
   }
 
-  private _render() {
+  private _render(): void {
     const fragment = this.render() as unknown as HTMLTemplateElement;
     const newElement = fragment.firstElementChild as HTMLElement;
     if (this._element) {
@@ -178,7 +179,7 @@ export default class Block {
     return this.element;
   }
 
-  _makePropsProxy(props: Props) {
+  _makePropsProxy(props: Props): ProxyHandler<Props> {
     const self = this;
 
     return new Proxy(props, {
@@ -201,16 +202,16 @@ export default class Block {
 
   _createDocumentElement(tagName: string): HTMLElement {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-    const element = document.createElement(tagName);
+    const element: HTMLElement = document.createElement(tagName);
     element.setAttribute("data-id", this.id);
     return element;
   }
 
-  show() {
+  show(): void {
     this.getContent()!.style.display = "block";
   }
 
-  hide() {
+  hide(): void {
     this.getContent()!.style.display = "none";
   }
 }

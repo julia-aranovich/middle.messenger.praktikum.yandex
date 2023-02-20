@@ -58,7 +58,7 @@ export default class ProfilePage extends Block {
             }
           })
         ],
-        fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps) => new Field({
+        fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps): Block => new Field({
           ...field,
           disabled: true,
           value: this.props[field.name]

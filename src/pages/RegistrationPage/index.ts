@@ -34,7 +34,7 @@ export default class RegistrationPage extends Block {
             }
           })
         ],
-        fields: PAGE_FIELDS[REGISTRATION_PAGE].map((field: FieldProps) => new Field(field))
+        fields: PAGE_FIELDS[REGISTRATION_PAGE].map((field: FieldProps): Block => new Field(field))
       }
     });
   }

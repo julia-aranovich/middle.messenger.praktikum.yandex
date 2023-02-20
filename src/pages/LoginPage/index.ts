@@ -34,7 +34,7 @@ export default class LoginPage extends Block {
             }
           })
         ],
-        fields: PAGE_FIELDS[LOGIN_PAGE].map((field: FieldProps) => new Field(field))
+        fields: PAGE_FIELDS[LOGIN_PAGE].map((field: FieldProps): Block => new Field(field))
       }
     });
   }
