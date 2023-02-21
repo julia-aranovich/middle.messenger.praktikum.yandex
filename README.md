@@ -1,3 +1,8 @@
+Sprint 2 Pull Request: https://github.com/julia-aranovich/middle.messenger.praktikum.yandex/pull/3
+==================
+
+
+
 ## <a href="https://keen-kleicha-40e27f.netlify.app/" target="_blank" title="JA Messenger">JA Messenger</a>
 
 Простой чат для общения с базовой функциональностью и дизайном. Поддерживает индивидуальные и групповые чаты, поиск по чатам, редактирование профиля, аватаров.
