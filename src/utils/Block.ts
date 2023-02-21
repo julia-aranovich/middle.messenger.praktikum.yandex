@@ -188,10 +188,11 @@ export default class Block {
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target: Props, prop: string, value) {
+        // the following clone to be improved
+        const oldProps = {...target};
         // eslint-disable-next-line no-param-reassign
         target[prop] = value;
-
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
         return true;
       },
       deleteProperty() {

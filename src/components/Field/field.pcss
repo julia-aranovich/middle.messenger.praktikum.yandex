@@ -3,13 +3,6 @@ div.field {
     margin-top: 1em;
   }
 
-  &.error {
-    input {
-      color: red;
-      border-color: red;
-    }
-  }
-
   label {
     display: block;
     color: var(--label-color);
@@ -52,5 +45,17 @@ div.field {
     font-style: italic;
     line-height: 1;
     padding-top: 0.5em;
+    display: none;
+  }
+
+  &.error {
+    input, textarea, input:focus, textarea:focus {
+      color: red;
+      border-color: red;
+    }
+
+    .error-text {
+      display: block;
+    }
   }
 }

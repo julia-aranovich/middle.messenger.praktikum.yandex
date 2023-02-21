@@ -9,7 +9,8 @@ export default class Field extends Block {
     this.children.input = new Input({
       ...this.props,
       events: {
-        blur: () => this.isValid()
+        blur: () => this.isValid(),
+        focus: () => this.isValid()
       }
     });
   }
@@ -18,7 +19,14 @@ export default class Field extends Block {
     const value: string = this.getValue();
     const regexError: boolean = !!this.props.regex && !new RegExp(this.props.regex).test(value);
     const error: boolean = this.props.mandatory ? !value || regexError : !!value && regexError;
-    this.setProps({...this.props, error});
+    // show/hide error in the following imperative way just to avoid component re-render:
+    // otherwise, input focus event causes Field re-render and the input is replaced by new element
+    // when replaced, it's blur event emitted. But the input already removed from DOM => error
+    if (error) {
+      this.element.classList.add("error");
+    } else {
+      this.element.classList.remove("error");
+    }
     return !error;
   }
 

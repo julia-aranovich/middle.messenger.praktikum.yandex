@@ -1,4 +1,4 @@
-<div class="field{{#if error}} error{{/if}}">
+<div class="field">
   {{#if label}}
     <label for={{name}}>
       {{label}}
@@ -6,7 +6,5 @@
     </label>
   {{/if}}
   {{{input}}}
-  {{#if error}}
-    <div class="error-text">{{error_text}}</div>
-  {{/if}}
+  <div class="error-text">{{error_text}}</div>
 </div>

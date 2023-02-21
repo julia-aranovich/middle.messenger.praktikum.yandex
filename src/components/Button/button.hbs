@@ -1,5 +1,6 @@
 <button
-  {{#if secondary}}class="secondary"{{else}}type="submit"{{/if}}
+  type="{{#if secondary}}button{{else}}submit{{/if}}"
+  {{#if secondary}}class="secondary"{{/if}}
   {{#if disabled}}disabled{{/if}}
 >
   {{text}}
