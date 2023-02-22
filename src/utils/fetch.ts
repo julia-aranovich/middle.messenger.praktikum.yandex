@@ -29,24 +29,28 @@ type Options = {
   data?: JSONObject;
 };
 
-type OptionsWithoutMethod = Omit<Options, "method">;
+type HTTPMethod = (url: string, options?: Omit<Options, "method">) => Promise<XMLHttpRequest>;
 
 export default class HTTPTransport {
-  get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.request(url, {...options, method: Methods.GET});
-  }
+  get: HTTPMethod = (
+    url,
+    options = {}
+  ) => this.request(url, {...options, method: Methods.GET});
 
-  post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.request(url, {...options, method: Methods.POST});
-  }
+  post: HTTPMethod = (
+    url,
+    options = {}
+  ) => this.request(url, {...options, method: Methods.POST});
 
-  put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.request(url, {...options, method: Methods.PUT});
-  }
+  put: HTTPMethod = (
+    url,
+    options = {}
+  ) => this.request(url, {...options, method: Methods.PUT});
 
-  delete(url:string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.request(url, {...options, method: Methods.DELETE});
-  }
+  delete: HTTPMethod = (
+    url,
+    options = {}
+  ) => this.request(url, {...options, method: Methods.DELETE});
 
   request(url: string, options: Options = {}): Promise<XMLHttpRequest> {
     const {

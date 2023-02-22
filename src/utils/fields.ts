@@ -104,15 +104,6 @@ export const SEARCH = {
   placeholder: "Поиск по чатам"
 };
 
-export type Field = {
-  name: string,
-  type?: string,
-  label?: string,
-  mandatory?: boolean,
-  regex?: string,
-  disabled?: string
-};
-
 const PAGE_FIELDS = {
   [LOGIN_PAGE]: [
     LOGIN,

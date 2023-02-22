@@ -1,11 +1,11 @@
 import Block from "../../utils/Block";
 
 import Button from "../../components/Button";
-import Field from "../../components/Field";
+import Field, {FieldProps} from "../../components/Field";
 import Form from "../../components/Form";
 
 import {LOGIN_PAGE, REGISTRATION_PAGE} from "../../utils/routes";
-import PAGE_FIELDS, {Field as FieldProps} from "../../utils/fields";
+import PAGE_FIELDS from "../../utils/fields";
 
 import template from "./registration_page.hbs";
 

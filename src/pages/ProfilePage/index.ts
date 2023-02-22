@@ -1,19 +1,30 @@
 import Block from "../../utils/Block";
 
 import Button from "../../components/Button";
-import Field from "../../components/Field";
+import Field, {FieldProps} from "../../components/Field";
 import Form from "../../components/Form";
 import Avatar, {AVATAR_SIZES} from "../../components/Avatar";
 
 import {
   CHANGE_PASSWORD_PAGE, CHAT_LIST_PAGE, LOGIN_PAGE, PROFILE_PAGE, UPDATE_PROFILE_PAGE
 } from "../../utils/routes";
-import PAGE_FIELDS, {Field as FieldProps} from "../../utils/fields";
+import PAGE_FIELDS from "../../utils/fields";
 
 import template from "./profile_page.hbs";
 import ChangeAvatarModal from "../../components/ChangeAvatarModal";
 
+export interface ProfilePageProps {
+  email: string,
+  login: string,
+  display_name?: string,
+  first_name?: string,
+  second_name?: string,
+  phone?: string
+};
+
 export default class ProfilePage extends Block {
+  props!: ProfilePageProps;
+
   init() {
     this.children.avatar = new Avatar({
       title: this.props.first_name,
@@ -61,7 +72,7 @@ export default class ProfilePage extends Block {
         fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps): Block => new Field({
           ...field,
           disabled: true,
-          value: this.props[field.name]
+          value: this.props[field.name as keyof ProfilePageProps]
         }))
       }
     });

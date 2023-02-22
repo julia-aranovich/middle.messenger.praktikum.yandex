@@ -16,6 +16,8 @@ export type MessageProps = {
 };
 
 export default class Message extends Block {
+  props!: MessageProps;
+
   get date(): string {
     // the next line to be removed after getting data from API
     if (this.props.created_at) return this.props.created_at;

@@ -5,7 +5,13 @@ import Field from "../Field";
 import template from "./form.hbs";
 import "./form.pcss";
 
+export interface FormProps {
+  children?: Record<string, Block>
+}
+
 export default class Form extends Block {
+  props!: FormProps;
+
   init() {
     this.children = {...this.props.children};
   }
@@ -34,6 +40,6 @@ export default class Form extends Block {
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(template, {});
   }
 }

@@ -4,7 +4,21 @@ import Input from "../Input";
 import template from "./field.hbs";
 import "./field.pcss";
 
+export interface FieldProps {
+  name: string,
+  type?: string,
+  label?: string,
+  value?: string,
+  placeholder?: string,
+  disabled?: boolean,
+  mandatory?: boolean,
+  regex?: string,
+  error_text?: string
+}
+
 export default class Field extends Block {
+  props!: FieldProps;
+
   init() {
     this.children.input = new Input({
       ...this.props,

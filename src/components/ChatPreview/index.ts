@@ -4,7 +4,7 @@ import Avatar from "../Avatar";
 import template from "./chat_preview.hbs";
 import "./chat_preview.pcss";
 
-export type ChatProps = {
+export type ChatPreviewProps = {
   title: string,
   members_count?: number,
   unread?: number,
@@ -13,6 +13,8 @@ export type ChatProps = {
 };
 
 export default class ChatPreview extends Block {
+  props!: ChatPreviewProps;
+
   init() {
     this.children.avatar = new Avatar({
       title: this.props.title

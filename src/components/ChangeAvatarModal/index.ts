@@ -4,7 +4,13 @@ import Button from "../Button";
 import template from "./change_avatar_modal.hbs";
 import "./change_avatar_modal.pcss";
 
+interface ChangeAvatarModalProps {
+  isVisible?: boolean
+}
+
 export default class ChangeAvatarModal extends Block {
+  props!: ChangeAvatarModalProps;
+
   init() {
     this.children.submitButton = new Button({
       text: "Сохранить",
