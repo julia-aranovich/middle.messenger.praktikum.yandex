@@ -31,7 +31,7 @@ export default class Sidebar extends Block {
         fields: [new Field({...SEARCH, value: this.props.search})]
       }
     });
-    (<Block[]><unknown>this.children.chats) = this.props.chats.map(
+    (<Block[]><unknown> this.children.chats) = this.props.chats.map(
       (chat: ChatPreviewProps): Block => new ChatPreview({
         ...chat,
         events: {

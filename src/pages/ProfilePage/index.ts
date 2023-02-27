@@ -20,7 +20,7 @@ export interface ProfilePageProps {
   first_name?: string,
   second_name?: string,
   phone?: string
-};
+}
 
 export default class ProfilePage extends Block {
   props!: ProfilePageProps;
@@ -34,7 +34,7 @@ export default class ProfilePage extends Block {
       text: "Загрузить фото",
       secondary: true,
       events: {
-        click: () => this.children.changeAvatarModal.setProps({isVisible: true})
+        click: () => this.children.changeAvatarModal.show()
       }
     });
     this.children.form = new Form({
@@ -76,7 +76,7 @@ export default class ProfilePage extends Block {
         }))
       }
     });
-    this.children.changeAvatarModal = new ChangeAvatarModal({isVisible: false});
+    this.children.changeAvatarModal = new ChangeAvatarModal();
   }
 
   render() {

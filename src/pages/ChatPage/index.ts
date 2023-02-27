@@ -24,7 +24,7 @@ export default class ChatPage extends Block {
       title: this.props.chat.title,
       size: AVATAR_SIZES.MEDIUM
     });
-    (<Block[]><unknown>this.children.messages) = this.props.messages.map(
+    (<Block[]><unknown> this.children.messages) = this.props.messages.map(
       (message: MessageProps): Block => new Message(message)
     );
     this.children.form = new NewMessageForm({
