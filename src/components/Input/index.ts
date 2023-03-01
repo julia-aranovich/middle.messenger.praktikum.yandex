@@ -7,12 +7,14 @@ interface InputProps {
   type?: string,
   value?: string,
   placeholder?: string,
-  disabled?: boolean
+  disabled?: boolean,
+  events: {
+    blur: (e: Event) => void,
+    focus: (e: Event) => void
+  }
 }
 
-export default class Input extends Block {
-  props!: InputProps;
-
+export default class Input extends Block<InputProps> {
   render() {
     return this.compile(template, {type: "text", ...this.props});
   }

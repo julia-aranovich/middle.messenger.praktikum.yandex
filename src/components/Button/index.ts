@@ -6,12 +6,13 @@ import "./button.pcss";
 interface ButtonProps {
   text: string,
   secondary?: boolean,
-  disabled?: boolean
+  disabled?: boolean,
+  events?: {
+    click: (e: Event) => void
+  }
 }
 
-export default class Button extends Block {
-  props!: ButtonProps;
-
+export default class Button extends Block<ButtonProps> {
   render() {
     return this.compile(template, this.props);
   }

@@ -11,9 +11,7 @@ import {PROFILE_PAGE} from "../../utils/routes";
 import template from "./update_profile_page.hbs";
 import PAGE_FIELDS from "../../utils/fields";
 
-export default class UpdateProfilePage extends Block {
-  props!: ProfilePageProps;
-
+export default class UpdateProfilePage extends Block<ProfilePageProps> {
   init() {
     this.children.avatar = new Avatar({
       title: this.props.first_name,
@@ -29,15 +27,13 @@ export default class UpdateProfilePage extends Block {
           }
         }
       },
-      children: {
-        submitButton: new Button({
-          text: "Сохранить"
-        }),
-        fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps): Block => new Field({
-          ...field,
-          value: this.props[field.name as keyof ProfilePageProps]
-        }))
-      }
+      submitButton: new Button({
+        text: "Сохранить"
+      }),
+      fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps): Block => new Field({
+        ...field,
+        value: this.props[field.name as keyof ProfilePageProps]
+      }))
     });
   }
 

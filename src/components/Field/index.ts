@@ -16,9 +16,7 @@ export interface FieldProps {
   error_text?: string
 }
 
-export default class Field extends Block {
-  props!: FieldProps;
-
+export default class Field extends Block<FieldProps> {
   init() {
     this.children.input = new Input({
       ...this.props,

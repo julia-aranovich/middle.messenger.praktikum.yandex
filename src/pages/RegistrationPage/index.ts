@@ -21,21 +21,19 @@ export default class RegistrationPage extends Block {
           }
         }
       },
-      children: {
-        submitButton: new Button({
-          text: "Зарегистрироваться"
-        }),
-        actions: [
-          new Button({
-            text: "Войти",
-            secondary: true,
-            events: {
-              click: () => window.renderPage(LOGIN_PAGE)
-            }
-          })
-        ],
-        fields: PAGE_FIELDS[REGISTRATION_PAGE].map((field: FieldProps): Block => new Field(field))
-      }
+      submitButton: new Button({
+        text: "Зарегистрироваться"
+      }),
+      actions: [
+        new Button({
+          text: "Войти",
+          secondary: true,
+          events: {
+            click: () => window.renderPage(LOGIN_PAGE)
+          }
+        })
+      ],
+      fields: PAGE_FIELDS[REGISTRATION_PAGE].map((field: FieldProps): Block => new Field(field))
     });
   }
 

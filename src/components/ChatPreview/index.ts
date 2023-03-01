@@ -9,12 +9,13 @@ export type ChatPreviewProps = {
   members_count?: number,
   unread?: number,
   selected?: boolean,
-  last_updated: string
+  last_updated: string,
+  events: {
+    click: (e: Event) => void
+  }
 };
 
-export default class ChatPreview extends Block {
-  props!: ChatPreviewProps;
-
+export default class ChatPreview extends Block<ChatPreviewProps> {
   init() {
     this.children.avatar = new Avatar({
       title: this.props.title

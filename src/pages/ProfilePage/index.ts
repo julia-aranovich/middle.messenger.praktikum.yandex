@@ -22,61 +22,57 @@ export interface ProfilePageProps {
   phone?: string
 }
 
-export default class ProfilePage extends Block {
-  props!: ProfilePageProps;
-
+export default class ProfilePage extends Block<ProfilePageProps> {
   init() {
     this.children.avatar = new Avatar({
       title: this.props.first_name,
       size: AVATAR_SIZES.LARGE
     });
+    this.children.changeAvatarModal = new ChangeAvatarModal();
     this.children.chageAvatarLink = new Button({
       text: "Загрузить фото",
       secondary: true,
       events: {
-        click: () => this.children.changeAvatarModal.show()
+        click: () => (this.children.changeAvatarModal as Block).show()
       }
     });
     this.children.form = new Form({
-      children: {
-        actions: [
-          new Button({
-            text: "Изменить данные",
-            secondary: true,
-            events: {
-              click: () => window.renderPage(UPDATE_PROFILE_PAGE)
-            }
-          }),
-          new Button({
-            text: "Изменить пароль",
-            secondary: true,
-            events: {
-              click: () => window.renderPage(CHANGE_PASSWORD_PAGE)
-            }
-          }),
-          new Button({
-            text: "Назад к чатам",
-            secondary: true,
-            events: {
-              click: () => window.renderPage(CHAT_LIST_PAGE)
-            }
-          }),
-          new Button({
-            text: "Выйти",
-            secondary: true,
-            events: {
-              click: () => window.renderPage(LOGIN_PAGE)
-            }
-          })
-        ],
-        fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps): Block => new Field({
-          ...field,
-          disabled: true,
-          value: this.props[field.name as keyof ProfilePageProps]
-        }))
-      }
+      actions: [
+        new Button({
+          text: "Изменить данные",
+          secondary: true,
+          events: {
+            click: () => window.renderPage(UPDATE_PROFILE_PAGE)
+          }
+        }),
+        new Button({
+          text: "Изменить пароль",
+          secondary: true,
+          events: {
+            click: () => window.renderPage(CHANGE_PASSWORD_PAGE)
+          }
+        }),
+        new Button({
+          text: "Назад к чатам",
+          secondary: true,
+          events: {
+            click: () => window.renderPage(CHAT_LIST_PAGE)
+          }
+        }),
+        new Button({
+          text: "Выйти",
+          secondary: true,
+          events: {
+            click: () => window.renderPage(LOGIN_PAGE)
+          }
+        })
+      ],
+      fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps): Block => new Field({
+        ...field,
+        disabled: true,
+        value: this.props[field.name as keyof ProfilePageProps]
+      }))
     });
-    this.children.changeAvatarModal = new ChangeAvatarModal();
   }
 
   render() {

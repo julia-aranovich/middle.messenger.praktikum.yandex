@@ -14,9 +14,7 @@ interface AvatarProps {
   size?: string
 }
 
-export default class Avatar extends Block {
-  props!: AvatarProps;
-
+export default class Avatar extends Block<AvatarProps> {
   render() {
     return this.compile(template, {size: AVATAR_SIZES.REGULAR, ...this.props});
   }

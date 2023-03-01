@@ -8,8 +8,6 @@ import ChatPage from "../pages/ChatPage";
 import ServerErrorPage from "../pages/ServerErrorPage";
 import NotFoundPage from "../pages/NotFoundPage";
 
-import {Props} from "./types";
-
 import {CHAT_LIST_DATA, CHAT_PAGE_DATA, PROFILE} from "./data";
 import {
   CHANGE_PASSWORD_PAGE,
@@ -35,7 +33,7 @@ const ROUTE_PAGES = {
   [NOT_FOUND_PAGE]: NotFoundPage
 };
 
-const CONTEXTS: Props = {
+const CONTEXTS: Record<string, object> = {
   [PROFILE_PAGE]: PROFILE,
   [UPDATE_PROFILE_PAGE]: PROFILE,
   [CHANGE_PASSWORD_PAGE]: PROFILE,

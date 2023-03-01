@@ -15,9 +15,7 @@ export interface SidebarProps {
   chats: ChatPreviewProps[]
 }
 
-export default class Sidebar extends Block {
-  props!: SidebarProps;
-
+export default class Sidebar extends Block<SidebarProps> {
   init() {
     this.children.profileLink = new Button({
       text: "Мой профиль",
@@ -27,11 +25,9 @@ export default class Sidebar extends Block {
       }
     });
     this.children.searchForm = new Form({
-      children: {
-        fields: [new Field({...SEARCH, value: this.props.search})]
-      }
+      fields: [new Field({...SEARCH, value: this.props.search})]
     });
-    (<Block[]><unknown> this.children.chats) = this.props.chats.map(
+    this.children.chats = this.props.chats.map(
       (chat: ChatPreviewProps): Block => new ChatPreview({
         ...chat,
         events: {

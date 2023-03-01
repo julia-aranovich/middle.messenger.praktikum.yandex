@@ -6,18 +6,19 @@ import template from "./form.hbs";
 import "./form.pcss";
 
 export interface FormProps {
-  children?: Record<string, Block>
+  submitButton?: Block,
+  fields: Block[],
+  actions?: Block[],
+  events?: {
+    submit: (e: Event) => void
+  },
+  iconAttach?: string,
+  iconArrowRight?: string
 }
 
-export default class Form extends Block {
-  props!: FormProps;
-
-  init() {
-    this.children = {...this.props.children};
-  }
-
+export default class Form extends Block<FormProps> {
   get data() {
-    return (<Field[]><unknown> this.children.fields).reduce((
+    return (<Field[]> this.children.fields).reduce((
       result: Record<string, string>,
       field: Block
     ) => ({
@@ -33,7 +34,7 @@ export default class Form extends Block {
 
   isValid(): boolean {
     let result = true;
-    (<Field[]><unknown> this.children.fields).forEach((field: Block) => {
+    (<Field[]> this.children.fields).forEach((field: Block) => {
       result = (<Field>field).isValid() && result;
     });
     return result;
