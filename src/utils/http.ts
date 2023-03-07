@@ -1,18 +1,32 @@
-import {JSONObject} from "./types";
+import {JSONObject, Indexed} from "./types";
+import isPlainObject from "../data-utils/isPlainObject";
+import isArrayOrObject from "../data-utils/isArrayOrObject";
 
-function queryStringify(obj: any, prefix?: string): string {
-  if (typeof obj !== "object") {
-    throw new Error("Query data must be object");
+function getKey(key: string, parentKey?: string) {
+  return parentKey ? `${parentKey}[${key}]` : key;
+}
+
+function getParams(data: Indexed | [], parentKey?: string) {
+  const result: [string, string][] = [];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [key, value] of Object.entries(data)) {
+    if (isArrayOrObject(value)) {
+      result.push(...getParams(value, getKey(key, parentKey)));
+    } else {
+      result.push([getKey(key, parentKey), encodeURIComponent(String(value))]);
+    }
   }
-  const result: string[] = [];
-  Object.keys(obj).forEach((k: string): void => {
-    const key = prefix ? `${prefix}[${k}]` : k;
-    const value = obj[key] === null || obj[key] === undefined || Number.isNaN(obj[key]) ? "" : obj[key];
-    result.push(typeof value === "object" ?
-      queryStringify(value, key) :
-      `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-  });
-  return `${!prefix && "?"}${result.join("&")}`;
+
+  return result;
+}
+
+function queryStringify(data: Indexed) {
+  if (!isPlainObject(data)) {
+    throw new Error("input must be an object");
+  }
+
+  return getParams(data).map((arr) => arr.join("=")).join("&");
 }
 
 enum Methods {
@@ -31,7 +45,9 @@ type Options = {
 
 type HTTPMethod = (url: string, options?: Omit<Options, "method">) => Promise<XMLHttpRequest>;
 
-export default class HTTPTransport {
+export default class HTTP {
+  constructor(private _baseUrl: string) {}
+
   get: HTTPMethod = (
     url,
     options = {}
@@ -64,7 +80,11 @@ export default class HTTPTransport {
       const xhr = new XMLHttpRequest();
       const isGet = method === Methods.GET;
 
-      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
+      xhr.open(
+        method,
+        isGet && !!data ?
+          `${this._baseUrl}${url}${queryStringify(data)}` : `${this._baseUrl}${url}`
+      );
 
       Object.keys(headers).forEach((key: string) => {
         xhr.setRequestHeader(key, headers[key]);
@@ -87,21 +107,4 @@ export default class HTTPTransport {
       }
     });
   }
-}
-
-type OptionsWithRetries = Options & {
-  retries: number;
-};
-
-export function fetchWithRetry(url: string, options: OptionsWithRetries): Promise<XMLHttpRequest> {
-  const {retries = 5, ...fetchOptions} = options;
-
-  function onError() {
-    if (retries === 1) {
-      throw new Error("No retries left");
-    }
-    return fetchWithRetry(url, {...fetchOptions, ...{retries: retries - 1}});
-  }
-
-  return new HTTPTransport().request(url, fetchOptions).catch(onError);
 }

@@ -14,3 +14,7 @@ export interface JSONObject {
 }
 
 export interface JSONArray extends Array<JSONValue> { }
+
+export type Indexed<T = any> = {
+  [k in string]: T;
+};
