@@ -8,6 +8,7 @@
   "rules": {
     "quotes": ["error", "double"],
     "@typescript-eslint/quotes": ["error", "double"],
+    "max-classes-per-file": 0,
     "default-param-last": 0,
     "one-var": ["error", {"let": "consecutive", "const": "never"}],
     "one-var-declaration-per-line": ["error", "initializations"],

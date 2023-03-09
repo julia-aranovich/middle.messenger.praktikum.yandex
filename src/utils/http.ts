@@ -1,4 +1,4 @@
-import {JSONObject, Indexed} from "./types";
+import {Indexed} from "./types";
 import isPlainObject from "../data-utils/isPlainObject";
 import isArrayOrObject from "../data-utils/isArrayOrObject";
 
@@ -40,7 +40,7 @@ type Options = {
   headers?: Record<string, string>;
   method?: Methods;
   timeout?: number;
-  data?: JSONObject;
+  data?: Indexed;
 };
 
 type HTTPMethod = (url: string, options?: Omit<Options, "method">) => Promise<XMLHttpRequest>;

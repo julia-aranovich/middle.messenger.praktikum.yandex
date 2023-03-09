@@ -1,6 +1,4 @@
-import {
-  CHANGE_PASSWORD_PAGE, LOGIN_PAGE, PROFILE_PAGE, REGISTRATION_PAGE
-} from "./routes";
+import {Routes} from "./Router";
 
 const REGEXES = {
   email: "(.+)@(.+){2,}\\.(.+){2,}",
@@ -105,11 +103,11 @@ export const SEARCH = {
 };
 
 const PAGE_FIELDS = {
-  [LOGIN_PAGE]: [
+  [Routes.LOGIN_PAGE]: [
     LOGIN,
     PASSWORD
   ],
-  [REGISTRATION_PAGE]: [
+  [Routes.REGISTRATION_PAGE]: [
     EMAIL,
     LOGIN,
     FIRST_NAME,
@@ -118,7 +116,7 @@ const PAGE_FIELDS = {
     PASSWORD,
     REPEAT_PASSWORD
   ],
-  [PROFILE_PAGE]: [
+  [Routes.PROFILE_PAGE]: [
     EMAIL,
     LOGIN,
     DISPLAY_NAME,
@@ -126,7 +124,7 @@ const PAGE_FIELDS = {
     SECOND_NAME,
     PHONE
   ],
-  [CHANGE_PASSWORD_PAGE]: [
+  [Routes.CHANGE_PASSWORD_PAGE]: [
     OLD_PASSWORD,
     NEW_PASSWORD,
     REPEAT_PASSWORD

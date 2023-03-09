@@ -1,13 +1,12 @@
 import Block from "../../utils/Block";
 
 import Button from "../../components/Button";
+import ButtonLink from "../../components/ButtonLink";
 import Field, {FieldProps} from "../../components/Field";
 import Form from "../../components/Form";
 import Avatar, {AVATAR_SIZES} from "../../components/Avatar";
 
-import {
-  CHANGE_PASSWORD_PAGE, CHAT_LIST_PAGE, LOGIN_PAGE, PROFILE_PAGE, UPDATE_PROFILE_PAGE
-} from "../../utils/routes";
+import {Routes} from "../../utils/Router";
 import PAGE_FIELDS from "../../utils/fields";
 
 import template from "./profile_page.hbs";
@@ -38,36 +37,24 @@ export default class ProfilePage extends Block<ProfilePageProps> {
     });
     this.children.form = new Form({
       actions: [
-        new Button({
-          text: "Изменить данные",
-          secondary: true,
-          events: {
-            click: () => window.renderPage(UPDATE_PROFILE_PAGE)
-          }
+        new ButtonLink({
+          to: Routes.UPDATE_PROFILE_PAGE,
+          text: "Изменить данные"
         }),
-        new Button({
-          text: "Изменить пароль",
-          secondary: true,
-          events: {
-            click: () => window.renderPage(CHANGE_PASSWORD_PAGE)
-          }
+        new ButtonLink({
+          to: Routes.CHANGE_PASSWORD_PAGE,
+          text: "Изменить пароль"
         }),
-        new Button({
-          text: "Назад к чатам",
-          secondary: true,
-          events: {
-            click: () => window.renderPage(CHAT_LIST_PAGE)
-          }
+        new ButtonLink({
+          to: Routes.CHAT_LIST_PAGE,
+          text: "Назад к чатам"
         }),
-        new Button({
-          text: "Выйти",
-          secondary: true,
-          events: {
-            click: () => window.renderPage(LOGIN_PAGE)
-          }
+        new ButtonLink({
+          to: Routes.LOGIN_PAGE,
+          text: "Выйти"
         })
       ],
-      fields: PAGE_FIELDS[PROFILE_PAGE].map((field: FieldProps): Block => new Field({
+      fields: PAGE_FIELDS[Routes.PROFILE_PAGE].map((field: FieldProps): Block => new Field({
         ...field,
         disabled: true,
         value: this.props[field.name as keyof ProfilePageProps]

@@ -1,10 +1,9 @@
 import Block from "../../utils/Block";
-import Button from "../Button";
 import Form from "../Form";
 import Field from "../Field";
 import ChatPreview, {ChatPreviewProps} from "../ChatPreview";
 
-import {CHAT_PAGE, PROFILE_PAGE} from "../../utils/routes";
+import Router, {Routes} from "../../utils/Router";
 import {SEARCH} from "../../utils/fields";
 
 import template from "./sidebar.hbs";
@@ -17,13 +16,6 @@ export interface SidebarProps {
 
 export default class Sidebar extends Block<SidebarProps> {
   init() {
-    this.children.profileLink = new Button({
-      text: "Мой профиль",
-      secondary: true,
-      events: {
-        click: () => window.renderPage(PROFILE_PAGE)
-      }
-    });
     this.children.searchForm = new Form({
       fields: [new Field({...SEARCH, value: this.props.search})]
     });
@@ -31,7 +23,7 @@ export default class Sidebar extends Block<SidebarProps> {
       (chat: ChatPreviewProps): Block => new ChatPreview({
         ...chat,
         events: {
-          click: () => window.renderPage(CHAT_PAGE)
+          click: () => Router.go(Routes.CHAT_PAGE)
         }
       })
     );

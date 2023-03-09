@@ -1,52 +1,119 @@
-import LoginPage from "../pages/LoginPage";
-import RegistrationPage from "../pages/RegistrationPage";
-import ProfilePage from "../pages/ProfilePage";
-import UpdateProfilePage from "../pages/UpdateProfilePage";
-import ChangePasswordPage from "../pages/ChangePasswordPage";
-import ChatListPage from "../pages/ChatListPage";
-import ChatPage from "../pages/ChatPage";
-import ServerErrorPage from "../pages/ServerErrorPage";
-import NotFoundPage from "../pages/NotFoundPage";
+import Block from "./Block";
 
-import {CHAT_LIST_DATA, CHAT_PAGE_DATA, PROFILE} from "./data";
-import {
-  CHANGE_PASSWORD_PAGE,
-  CHAT_LIST_PAGE,
-  CHAT_PAGE,
-  LOGIN_PAGE,
-  NOT_FOUND_PAGE,
-  PROFILE_PAGE,
-  REGISTRATION_PAGE,
-  SERVER_ERROR_PAGE,
-  UPDATE_PROFILE_PAGE
-} from "./routes";
-
-const ROUTE_PAGES = {
-  [LOGIN_PAGE]: LoginPage,
-  [REGISTRATION_PAGE]: RegistrationPage,
-  [PROFILE_PAGE]: ProfilePage,
-  [UPDATE_PROFILE_PAGE]: UpdateProfilePage,
-  [CHANGE_PASSWORD_PAGE]: ChangePasswordPage,
-  [CHAT_LIST_PAGE]: ChatListPage,
-  [CHAT_PAGE]: ChatPage,
-  [SERVER_ERROR_PAGE]: ServerErrorPage,
-  [NOT_FOUND_PAGE]: NotFoundPage
-};
-
-const CONTEXTS: Record<string, object> = {
-  [PROFILE_PAGE]: PROFILE,
-  [UPDATE_PROFILE_PAGE]: PROFILE,
-  [CHANGE_PASSWORD_PAGE]: PROFILE,
-  [CHAT_LIST_PAGE]: CHAT_LIST_DATA,
-  [CHAT_PAGE]: CHAT_PAGE_DATA
-};
-
-export default function renderPage(route?: keyof typeof ROUTE_PAGES): HTMLElement {
-  const root = document.querySelector("#root") as HTMLElement;
-  root.innerHTML = "";
-  const PageComponent = ROUTE_PAGES[route || LOGIN_PAGE];
-  const page = new PageComponent((route && CONTEXTS[route]) || {});
-  root.appendChild(page.getContent());
-  page.dispatchComponentDidMount();
-  return root;
+export enum Routes {
+  CHANGE_PASSWORD_PAGE = "/change-password",
+  CHAT_LIST_PAGE = "/messengers",
+  CHAT_PAGE = "/messenger",
+  LOGIN_PAGE = "/",
+  NOT_FOUND_PAGE = "/not-found",
+  PROFILE_PAGE = "/settings",
+  REGISTRATION_PAGE = "/sign-up",
+  SERVER_ERROR_PAGE = "/oops",
+  UPDATE_PROFILE_PAGE = "/update-settings"
 }
+
+class Route<P extends Record<string, any> = any> {
+  constructor(
+    private _pathname: Routes,
+    private _blockClass: typeof Block,
+    private _props: P,
+    private _block: Block | null = null
+  ) { }
+
+  navigate(pathname: Routes): void {
+    if (this.match(pathname)) {
+      this._pathname = pathname;
+      this.render();
+    }
+  }
+
+  leave(): void {
+    if (this._block) {
+      this._block.getContent().remove();
+    }
+  }
+
+  match(pathname: Routes): boolean {
+    return pathname === this._pathname;
+  }
+
+  render(): void {
+    if (!this._block) {
+      this._block = new this._blockClass(this._props);
+      const root = document.querySelector("#root") as HTMLElement;
+      root.innerHTML = "";
+      root.appendChild(this._block.getContent());
+      this._block.dispatchComponentDidMount();
+      return;
+    }
+
+    this._block.show();
+  }
+}
+
+class Router<P extends Record<string, any> = any> {
+  routes: Route[] = [];
+
+  history: History = window.history;
+
+  private _currentRoute: Route | null = null;
+
+  private static __instance: Router | null;
+
+  constructor() {
+    if (Router.__instance) {
+      // eslint-disable-next-line no-constructor-return
+      return Router.__instance;
+    }
+
+    Router.__instance = this;
+  }
+
+  use(pathname: Routes, block: typeof Block, context: P = {} as P): Router {
+    const route = new Route(pathname, block, context);
+    this.routes.push(route);
+    return this;
+  }
+
+  start() {
+    window.onpopstate = ((e: PopStateEvent) => {
+      // @ts-ignore
+      this._onRoute(e.currentTarget!.location.pathname);
+    });
+
+    this._onRoute(window.location.pathname as Routes);
+  }
+
+  _onRoute(pathname: Routes): void {
+    const route = this.getRoute(pathname);
+    if (!route) {
+      return;
+    }
+
+    if (this._currentRoute && this._currentRoute !== route) {
+      this._currentRoute.leave();
+    }
+
+    this._currentRoute = route;
+    route.render();
+  }
+
+  go(pathname: Routes): void {
+    this.history.pushState({}, "", pathname);
+    this._onRoute(pathname);
+  }
+
+  back():void {
+    this.history.back();
+  }
+
+  forward():void {
+    this.history.forward();
+  }
+
+  getRoute(pathname: Routes) {
+    return this.routes.find((route) => route.match(pathname));
+  }
+}
+
+export default new Router();

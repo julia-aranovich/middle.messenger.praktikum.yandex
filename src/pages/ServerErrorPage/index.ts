@@ -1,7 +1,6 @@
 import Block from "../../utils/Block";
 import Button from "../../components/Button";
-
-import {LOGIN_PAGE} from "../../utils/routes";
+import Router from "../../utils/Router";
 
 import template from "./server_error_page.hbs";
 
@@ -11,7 +10,7 @@ export default class ServerErrorPage extends Block {
       text: "Назад",
       secondary: true,
       events: {
-        click: () => window.renderPage(LOGIN_PAGE)
+        click: () => Router.back()
       }
     });
   }

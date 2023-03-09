@@ -1,10 +1,11 @@
 import Block from "../../utils/Block";
 
 import Button from "../../components/Button";
+import ButtonLink from "../../components/ButtonLink";
 import Field, {FieldProps} from "../../components/Field";
 import Form from "../../components/Form";
 
-import {CHAT_LIST_PAGE, LOGIN_PAGE, REGISTRATION_PAGE} from "../../utils/routes";
+import Router, {Routes} from "../../utils/Router";
 import PAGE_FIELDS from "../../utils/fields";
 
 import template from "./login_page.hbs";
@@ -17,7 +18,7 @@ export default class LoginPage extends Block {
           e.preventDefault();
           (<Form> this.children.form).logData();
           if ((<Form> this.children.form).isValid()) {
-            window.renderPage(CHAT_LIST_PAGE);
+            Router.go(Routes.CHAT_LIST_PAGE);
           }
         }
       },
@@ -25,15 +26,12 @@ export default class LoginPage extends Block {
         text: "Войти"
       }),
       actions: [
-        new Button({
-          text: "Зарегистрироваться",
-          secondary: true,
-          events: {
-            click: () => window.renderPage(REGISTRATION_PAGE)
-          }
+        new ButtonLink({
+          to: Routes.REGISTRATION_PAGE,
+          text: "Зарегистрироваться"
         })
       ],
-      fields: PAGE_FIELDS[LOGIN_PAGE].map((field: FieldProps): Block => new Field(field))
+      fields: PAGE_FIELDS[Routes.LOGIN_PAGE].map((field: FieldProps): Block => new Field(field))
     });
   }
 

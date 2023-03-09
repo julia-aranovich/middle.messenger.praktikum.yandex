@@ -1,12 +1,13 @@
 import Block from "../../utils/Block";
 
 import Button from "../../components/Button";
+import ButtonLink from "../../components/ButtonLink";
 import Field, {FieldProps} from "../../components/Field";
 import Form from "../../components/Form";
 import Avatar, {AVATAR_SIZES} from "../../components/Avatar";
 import {ProfilePageProps} from "../ProfilePage";
 
-import {CHANGE_PASSWORD_PAGE, LOGIN_PAGE, PROFILE_PAGE} from "../../utils/routes";
+import Router, {Routes} from "../../utils/Router";
 import PAGE_FIELDS from "../../utils/fields";
 
 import template from "./change_password_page.hbs";
@@ -25,21 +26,18 @@ export default class ChangePasswordPage extends Block<ProfilePageProps> {
             e.preventDefault();
             (<Form> this.children.form).logData();
             if ((<Form> this.children.form).isValid()) {
-              window.renderPage(LOGIN_PAGE);
+              Router.go(Routes.LOGIN_PAGE);
             }
           }
         }
       }),
       actions: [
-        new Button({
-          text: "Назад в профиль",
-          secondary: true,
-          events: {
-            click: () => window.renderPage(PROFILE_PAGE)
-          }
+        new ButtonLink({
+          to: Routes.PROFILE_PAGE,
+          text: "Назад в профиль"
         })
       ],
-      fields: PAGE_FIELDS[CHANGE_PASSWORD_PAGE].map((field: FieldProps) => new Field(field))
+      fields: PAGE_FIELDS[Routes.CHANGE_PASSWORD_PAGE].map((field: FieldProps) => new Field(field))
     });
   }
 
