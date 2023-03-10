@@ -2,14 +2,13 @@ import Block from "./Block";
 
 export enum Routes {
   CHANGE_PASSWORD_PAGE = "/change-password",
-  CHAT_LIST_PAGE = "/messengers",
-  CHAT_PAGE = "/messenger",
+  CHAT_LIST_PAGE = "/messenger",
   LOGIN_PAGE = "/",
   NOT_FOUND_PAGE = "/not-found",
   PROFILE_PAGE = "/settings",
   REGISTRATION_PAGE = "/sign-up",
   SERVER_ERROR_PAGE = "/oops",
-  UPDATE_PROFILE_PAGE = "/update-settings"
+  UPDATE_PROFILE_PAGE = "/edit-settings"
 }
 
 class Route<P extends Record<string, any> = any> {
@@ -69,7 +68,7 @@ class Router<P extends Record<string, any> = any> {
     Router.__instance = this;
   }
 
-  use(pathname: Routes, block: typeof Block, context: P = {} as P): Router {
+  use(pathname: Routes, block: typeof Block<any>, context: P = {} as P): Router {
     const route = new Route(pathname, block, context);
     this.routes.push(route);
     return this;
@@ -87,15 +86,15 @@ class Router<P extends Record<string, any> = any> {
   _onRoute(pathname: Routes): void {
     const route = this.getRoute(pathname);
     if (!route) {
-      return;
+      this.go(Routes.NOT_FOUND_PAGE);
     }
 
     if (this._currentRoute && this._currentRoute !== route) {
       this._currentRoute.leave();
     }
 
-    this._currentRoute = route;
-    route.render();
+    this._currentRoute = route as Route;
+    (route as Route).render();
   }
 
   go(pathname: Routes): void {
@@ -114,6 +113,15 @@ class Router<P extends Record<string, any> = any> {
   getRoute(pathname: Routes) {
     return this.routes.find((route) => route.match(pathname));
   }
+}
+
+export function withRouter(Component: typeof Block<any>) {
+  // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-shadow
+  return class withRouter extends Component {
+    constructor(props: Record<string, any>) {
+      super({...props, router: Router});
+    }
+  };
 }
 
 export default new Router();
