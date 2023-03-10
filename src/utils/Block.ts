@@ -25,7 +25,7 @@ export default class Block<P extends Record<string, any> = any> {
   constructor(propsAndChildren: P = {} as P) {
     const {children, props} = this._getChildrenAndProps(propsAndChildren);
     this.children = children;
-    this.props = this._makePropsProxy({ ...props, id: this.id});
+    this.props = this._makePropsProxy({...props, id: this.id});
 
     const eventBus = new EventBus();
     this.eventBus = () => eventBus;

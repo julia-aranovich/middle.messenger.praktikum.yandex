@@ -6,6 +6,7 @@ import "./button.pcss";
 interface ButtonProps {
   text: string,
   secondary?: boolean,
+  compact?: boolean,
   disabled?: boolean,
   events?: {
     click: (e: Event) => void

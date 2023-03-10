@@ -1,13 +1,13 @@
 <div>
   <div id="change-photo-modal-background"></div>
   <div id="change-photo-modal">
-    <form>
+    <form id="avatarForm">
       <div class="field">
         <h2>Загрузите фото</h2>
       </div>
       <div class="field">
-        <a>Выберите фото на компьютере</a>
-        <input type="file" name="avatar" />
+        <label for="avatar">Выберите фото на компьютере</label>
+        <input id="avatar" type="file" name="avatar" accept="image/*" />
       </div>
       {{{submitButton}}}
     </form>

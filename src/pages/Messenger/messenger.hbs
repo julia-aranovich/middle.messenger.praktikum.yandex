@@ -1,0 +1,34 @@
+<div id="chat-list-container">
+  {{{sidebar}}}
+  <div id="chat-view">
+    {{#if selectedChat}}
+      <div class="chat-title-container">
+        {{{avatar}}}
+        <div class="title">
+          <div>
+            {{selectedChat.title}}
+            <span class="members-count">&bull; Участников: {{selectedChatUsers.length}}</span>
+          </div>
+          <div class="manage-link">
+            {{{editChatLink}}}
+          </div>
+        </div>
+      </div>
+      <div class="chat-message-list">
+        <div class="current-data">26 февраля</div>
+        <div class="message-list">
+          {{#each messages}}
+          {{{this}}}
+          {{/each}}
+        </div>
+      </div>
+      <div class="chat-message-form-wrapper">
+        {{{form}}}
+      </div>
+    {{else}}
+      <div class="vertical-alignment-outer">
+        <div class="vertical-alignment-inner no-items">Выберите чат, чтобы написать сообщение</div>
+      </div>
+    {{/if}}
+  </div>
+</div>

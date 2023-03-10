@@ -1,8 +1,12 @@
 import Block from "./Block";
 
+import isEqual from "../helpers/isEqual";
+import {Indexed} from "./types";
+
 export enum Routes {
   CHANGE_PASSWORD_PAGE = "/change-password",
-  CHAT_LIST_PAGE = "/messenger",
+  MESSENGER = "/messenger",
+  EDIT_CHAT_PAGE = "/edit-chat",
   LOGIN_PAGE = "/",
   NOT_FOUND_PAGE = "/not-found",
   PROFILE_PAGE = "/settings",
@@ -17,7 +21,7 @@ class Route<P extends Record<string, any> = any> {
     private _blockClass: typeof Block,
     private _props: P,
     private _block: Block | null = null
-  ) { }
+  ) {}
 
   navigate(pathname: Routes): void {
     if (this.match(pathname)) {
@@ -27,12 +31,10 @@ class Route<P extends Record<string, any> = any> {
   }
 
   leave(): void {
-    if (this._block) {
-      this._block.getContent().remove();
-    }
+    this._block = null;
   }
 
-  match(pathname: Routes): boolean {
+  match(pathname: string): boolean {
     return pathname === this._pathname;
   }
 
@@ -76,20 +78,20 @@ class Router<P extends Record<string, any> = any> {
 
   start() {
     window.onpopstate = ((e: PopStateEvent) => {
-      // @ts-ignore
-      this._onRoute(e.currentTarget!.location.pathname);
+      const target = e.currentTarget as Window;
+      this._onRoute(target.location.pathname);
     });
 
     this._onRoute(window.location.pathname as Routes);
   }
 
-  _onRoute(pathname: Routes): void {
+  _onRoute(pathname: string): void {
     const route = this.getRoute(pathname);
     if (!route) {
       this.go(Routes.NOT_FOUND_PAGE);
     }
 
-    if (this._currentRoute && this._currentRoute !== route) {
+    if (this._currentRoute && !isEqual(this._currentRoute, route as Indexed)) {
       this._currentRoute.leave();
     }
 
@@ -97,7 +99,8 @@ class Router<P extends Record<string, any> = any> {
     (route as Route).render();
   }
 
-  go(pathname: Routes): void {
+  go(pathname: string): void {
+    if (window.location.pathname === pathname) return;
     this.history.pushState({}, "", pathname);
     this._onRoute(pathname);
   }
@@ -110,18 +113,9 @@ class Router<P extends Record<string, any> = any> {
     this.history.forward();
   }
 
-  getRoute(pathname: Routes) {
+  getRoute(pathname: string): Route | undefined {
     return this.routes.find((route) => route.match(pathname));
   }
-}
-
-export function withRouter(Component: typeof Block<any>) {
-  // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-shadow
-  return class withRouter extends Component {
-    constructor(props: Record<string, any>) {
-      super({...props, router: Router});
-    }
-  };
 }
 
 export default new Router();

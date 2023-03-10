@@ -1,5 +1,4 @@
 import Block from "../../utils/Block";
-
 import Field from "../Field";
 
 import template from "./form.hbs";
@@ -13,11 +12,12 @@ export interface FormProps {
     submit: (e: Event) => void
   },
   iconAttach?: string,
-  iconArrowRight?: string
+  iconArrowRight?: string,
+  className?: string
 }
 
 export default class Form extends Block<FormProps> {
-  get data() {
+  get data(): Record<string, any> {
     return (<Field[]> this.children.fields).reduce((
       result: Record<string, string>,
       field: Block
@@ -25,11 +25,6 @@ export default class Form extends Block<FormProps> {
       ...result,
       ...{[field.props!.name]: (<Field>field).getValue()}
     }), {});
-  }
-
-  logData() {
-    // eslint-disable-next-line no-console
-    console.log(this.data);
   }
 
   isValid(): boolean {
@@ -41,6 +36,6 @@ export default class Form extends Block<FormProps> {
   }
 
   render() {
-    return this.compile(template, {});
+    return this.compile(template, this.props);
   }
 }

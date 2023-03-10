@@ -1,23 +1,28 @@
-import Router, {Routes} from "./utils/Router";
-import {CHAT_LIST_DATA, PROFILE} from "./utils/data";
+import router, {Routes} from "./utils/Router";
 
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import ProfilePage from "./pages/ProfilePage";
 import UpdateProfilePage from "./pages/UpdateProfilePage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
-import ChatListPage from "./pages/ChatListPage";
+import Messenger from "./pages/Messenger";
+import EditChatPage from "./pages/EditChatPage";
 import ServerErrorPage from "./pages/ServerErrorPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
-window.addEventListener("DOMContentLoaded", (): void => {
-  Router
+import AuthController from "./controllers/AuthController";
+import ChatsController from "./controllers/ChatsController";
+import store from "./utils/Store";
+
+window.addEventListener("DOMContentLoaded", async () => {
+  router
     .use(Routes.LOGIN_PAGE, LoginPage)
     .use(Routes.REGISTRATION_PAGE, RegistrationPage)
-    .use(Routes.PROFILE_PAGE, ProfilePage, PROFILE)
-    .use(Routes.UPDATE_PROFILE_PAGE, UpdateProfilePage, PROFILE)
-    .use(Routes.CHANGE_PASSWORD_PAGE, ChangePasswordPage, PROFILE)
-    .use(Routes.CHAT_LIST_PAGE, ChatListPage, CHAT_LIST_DATA)
+    .use(Routes.PROFILE_PAGE, ProfilePage)
+    .use(Routes.UPDATE_PROFILE_PAGE, UpdateProfilePage)
+    .use(Routes.CHANGE_PASSWORD_PAGE, ChangePasswordPage)
+    .use(Routes.MESSENGER, Messenger)
+    .use(Routes.EDIT_CHAT_PAGE, EditChatPage)
     .use(Routes.SERVER_ERROR_PAGE, ServerErrorPage)
     .use(Routes.NOT_FOUND_PAGE, NotFoundPage);
 
@@ -32,16 +37,21 @@ window.addEventListener("DOMContentLoaded", (): void => {
       break;
   }
 
-  // TODO: check auth
   try {
-    Router.start();
+    await AuthController.fetchUser();
+    const chats = await ChatsController.fetchChats();
+    if (!store.getState().selectedChatId && chats && chats[0]) {
+      await ChatsController.selectChat(chats[0].id);
+    }
+
+    router.start();
     if (!isProtectedRoute) {
-      Router.go(Routes.PROFILE_PAGE);
+      router.go(Routes.MESSENGER);
     }
   } catch (e) {
-    Router.start();
+    router.start();
     if (isProtectedRoute) {
-      Router.go(Routes.LOGIN_PAGE);
+      router.go(Routes.LOGIN_PAGE);
     }
   }
 });

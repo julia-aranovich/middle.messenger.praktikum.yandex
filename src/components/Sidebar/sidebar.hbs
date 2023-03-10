@@ -1,11 +1,20 @@
 <div id="chat-list">
   <div class="profile-link-container form">
-    <a href="/settings">Мой профиль</a>
+    {{{profileLink}}}
   </div>
   {{{searchForm}}}
+  {{{createForm}}}
   <div class="chat-blocks">
-    {{#each chats}}
-      {{{this}}}
-    {{/each}}
+    {{#if chats.length}}
+      {{#each chats}}
+        {{{this}}}
+      {{/each}}
+    {{else}}
+      {{#if search}}
+        <span class="no-items">Чатов не найдено</span>
+      {{else}}
+        <span class="no-items">Чатов не создано</span>
+      {{/if}}
+    {{/if}}
   </div>
 </div>

@@ -1,28 +1,31 @@
 import Block from "../../utils/Block";
 import Avatar from "../Avatar";
+import {ChatInfo} from "../../api/ChatsAPI";
 
 import template from "./chat_preview.hbs";
 import "./chat_preview.pcss";
+import withStore from "../../hocs/withStore";
+import {State} from "../../utils/Store";
 
 export type ChatPreviewProps = {
-  title: string,
-  members_count?: number,
-  unread?: number,
-  selected?: boolean,
-  last_updated: string,
   events: {
     click: (e: Event) => void
-  }
+  },
+  chat: ChatInfo,
+  selectedChatId?: number
 };
 
-export default class ChatPreview extends Block<ChatPreviewProps> {
+class ChatPreview extends Block<ChatPreviewProps> {
   init() {
-    this.children.avatar = new Avatar({
-      title: this.props.title
-    });
+    this.children.avatar = new Avatar(this.props.chat);
   }
 
   render() {
-    return this.compile(template, this.props);
+    return this.compile(
+      template,
+      {...this.props.chat, selected: this.props.chat.id === this.props.selectedChatId}
+    );
   }
 }
+
+export default withStore((state: State) => ({selectedChatId: state.selectedChatId}))(ChatPreview);

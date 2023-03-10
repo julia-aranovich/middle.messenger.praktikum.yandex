@@ -2,7 +2,6 @@ import isPlainObject from "./isPlainObject";
 import {Indexed} from "../utils/types";
 
 export default function merge(lhs: Indexed, rhs: Indexed): Indexed {
-  // eslint-disable-next-line no-restricted-syntax
   for (const p in rhs) {
     if (Object.prototype.hasOwnProperty.call(rhs, p)) {
       try {

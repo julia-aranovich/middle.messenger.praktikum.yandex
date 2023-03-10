@@ -5,7 +5,7 @@ import template from "./input.hbs";
 interface InputProps {
   name: string,
   type?: string,
-  value?: string,
+  value?: string | number,
   placeholder?: string,
   disabled?: boolean,
   events: {

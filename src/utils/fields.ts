@@ -97,11 +97,6 @@ const REPEAT_PASSWORD = {
   error_text: REGEX_ERRORS.password
 };
 
-export const SEARCH = {
-  name: "search",
-  placeholder: "Поиск по чатам"
-};
-
 const PAGE_FIELDS = {
   [Routes.LOGIN_PAGE]: [
     LOGIN,

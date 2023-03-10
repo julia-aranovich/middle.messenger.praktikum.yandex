@@ -8,7 +8,7 @@ export interface FieldProps {
   name: string,
   type?: string,
   label?: string,
-  value?: string,
+  value?: string | number,
   placeholder?: string,
   disabled?: boolean,
   mandatory?: boolean,

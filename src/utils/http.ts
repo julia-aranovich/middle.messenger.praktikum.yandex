@@ -9,7 +9,6 @@ function getKey(key: string, parentKey?: string) {
 function getParams(data: Indexed | [], parentKey?: string) {
   const result: [string, string][] = [];
 
-  // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(data)) {
     if (isArrayOrObject(value)) {
       result.push(...getParams(value, getKey(key, parentKey)));
@@ -26,7 +25,7 @@ function queryStringify(data: Indexed) {
     throw new Error("input must be an object");
   }
 
-  return getParams(data).map((arr) => arr.join("=")).join("&");
+  return `?${getParams(data).map((arr) => arr.join("=")).join("&")}`;
 }
 
 enum Methods {
@@ -37,44 +36,41 @@ enum Methods {
 }
 
 type Options = {
-  headers?: Record<string, string>;
-  method?: Methods;
-  timeout?: number;
-  data?: Indexed;
+  method: Methods;
+  data?: unknown;
 };
 
-type HTTPMethod = (url: string, options?: Omit<Options, "method">) => Promise<XMLHttpRequest>;
-
 export default class HTTP {
-  constructor(private _baseUrl: string) {}
+  static API_URL = "https://ya-praktikum.tech/api/v2";
 
-  get: HTTPMethod = (
-    url,
-    options = {}
-  ) => this.request(url, {...options, method: Methods.GET});
+  protected endpoint: string;
 
-  post: HTTPMethod = (
-    url,
-    options = {}
-  ) => this.request(url, {...options, method: Methods.POST});
+  constructor(endpoint: string) {
+    this.endpoint = `${HTTP.API_URL}${endpoint}`;
+  }
 
-  put: HTTPMethod = (
-    url,
-    options = {}
-  ) => this.request(url, {...options, method: Methods.PUT});
+  get<Response>(url: string, data?: Record<string, string | number>): Promise<Response> {
+    return this._request<Response>(url, {data, method: Methods.GET});
+  }
 
-  delete: HTTPMethod = (
-    url,
-    options = {}
-  ) => this.request(url, {...options, method: Methods.DELETE});
+  post<Response>(url: string, data?: unknown): Promise<Response> {
+    return this._request<Response>(url, {data, method: Methods.POST});
+  }
 
-  request(url: string, options: Options = {}): Promise<XMLHttpRequest> {
-    const {
-      headers = {},
-      method = Methods.GET,
-      timeout = 5000,
-      data
-    } = options;
+  put<Response>(url: string, data: unknown): Promise<Response> {
+    return this._request<Response>(url, {data, method: Methods.PUT});
+  }
+
+  delete<Response>(url: string, data?: unknown): Promise<Response> {
+    return this._request(url, {data, method: Methods.DELETE});
+  }
+
+  private _request<Response>(
+    url: string,
+    options: Options = {method: Methods.GET}
+  ): Promise<Response> {
+    const {method, data} = options;
+    const isFormData = data instanceof FormData;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -83,27 +79,33 @@ export default class HTTP {
       xhr.open(
         method,
         isGet && !!data ?
-          `${this._baseUrl}${url}${queryStringify(data)}` : `${this._baseUrl}${url}`
+          `${this.endpoint}${url}${queryStringify(data)}` : `${this.endpoint}${url}`
       );
 
-      Object.keys(headers).forEach((key: string) => {
-        xhr.setRequestHeader(key, headers[key]);
-      });
-
-      xhr.onload = () => {
-        resolve(xhr);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status < 400) {
+            resolve(xhr.response);
+          } else {
+            reject(xhr.response);
+          }
+        }
       };
 
-      xhr.onabort = reject;
-      xhr.onerror = reject;
+      xhr.timeout = 5000;
+      xhr.onabort = () => reject({reason: "abort"});
+      xhr.onerror = () => reject({reason: "network error"});
+      xhr.ontimeout = () => reject({reason: "timeout"});
 
-      xhr.timeout = timeout;
-      xhr.ontimeout = reject;
+      if (!isFormData) xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.withCredentials = true;
+      xhr.responseType = "json";
 
       if (isGet || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        xhr.send(isFormData ? data : JSON.stringify(data));
       }
     });
   }
