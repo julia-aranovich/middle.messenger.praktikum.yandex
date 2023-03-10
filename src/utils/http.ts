@@ -1,6 +1,6 @@
 import {Indexed} from "./types";
-import isPlainObject from "../data-utils/isPlainObject";
-import isArrayOrObject from "../data-utils/isArrayOrObject";
+import isPlainObject from "../helpers/isPlainObject";
+import isArrayOrObject from "../helpers/isArrayOrObject";
 
 function getKey(key: string, parentKey?: string) {
   return parentKey ? `${parentKey}[${key}]` : key;
