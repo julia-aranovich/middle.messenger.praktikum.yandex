@@ -7,5 +7,10 @@
         <div class="unread-count">{{unread_count}}</div>
       {{/if}}
     </div>
+    {{#if last_message}}
+      {{#with last_message}}
+        <span class="last-message">{{date}} {{author}}: {{content}}...</span>
+      {{/with}}
+    {{/if}}
   </div>
 </a>

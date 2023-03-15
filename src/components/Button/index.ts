@@ -10,7 +10,8 @@ interface ButtonProps {
   disabled?: boolean,
   events?: {
     click: (e: Event) => void
-  }
+  },
+  img?: string
 }
 
 export default class Button extends Block<ButtonProps> {

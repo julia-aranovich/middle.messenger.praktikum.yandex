@@ -4,5 +4,9 @@
   {{#if compact}}class="compact"{{/if}}
   {{#if disabled}}disabled{{/if}}
 >
-  {{text}}
+  {{#if img}}
+    <img src="{{img}}" alt="{{text}}" />
+  {{else}}
+    {{text}}
+  {{/if}}
 </button>

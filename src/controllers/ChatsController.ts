@@ -1,6 +1,6 @@
 import API, {ChatsAPI, ChatInfo} from "../api/ChatsAPI";
 import store from "../utils/Store";
-// import MessagesController from "./MessagesController";
+import MessagesController from "./MessagesController";
 
 class ChatsController {
   private readonly _api: ChatsAPI;
@@ -16,16 +16,18 @@ class ChatsController {
 
   async fetchChats(data?: Record<string, string | number>): Promise<ChatInfo[]> {
     const chats = await this._api.read(data);
-    // (chats as unknown as ChatInfo[]).map(async (chat: ChatInfo) => {
-    //   const token = await this.getToken(chat.id);
-    //   await MessagesController.connect(chat.id, token);
-    // });
+    chats.map(async (chat: ChatInfo) => {
+      const token = await this.getToken(chat.id);
+      await MessagesController.connect(chat.id, token);
+    });
 
     store.set(
       "chats",
-      (chats as ChatInfo[])
-        .sort((chat1, chat2) => chat1.unread_count - chat2.unread_count ||
-          chat1.title.localeCompare(chat2.title))
+      chats
+      // TODO: think how to sort chat list
+      // (chats as ChatInfo[])
+      //   .sort((chat1, chat2) => chat1.unread_count - chat2.unread_count ||
+      //     chat1.title.localeCompare(chat2.title))
     );
     return chats;
   }

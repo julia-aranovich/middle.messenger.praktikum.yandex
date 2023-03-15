@@ -1,4 +1,8 @@
+import { User } from "../../api/AuthAPI";
+import withStore from "../../hocs/withStore";
 import Block from "../../utils/Block";
+import { State } from "../../utils/Store";
+import {Message as MessageProps} from "../../utils/WS";
 
 import template from "./message.hbs";
 import "./message.pcss";
@@ -7,23 +11,37 @@ function twoDigitsString(int: number): string {
   return String(int).padStart(2, "0");
 }
 
-export type MessageProps = {
-  author: string,
-  text: string,
-  created_at?: string,
-  my?: boolean,
-  img?: string
-};
+export function formatDate(time: string): string {
+  const d = new Date(time || Date.now());
+  return `${twoDigitsString(d.getHours())}:${twoDigitsString(d.getMinutes())}`;
+}
 
-export default class Message extends Block<MessageProps> {
-  get date(): string {
-    // the next line to be removed after getting data from API
-    if (this.props.created_at) return this.props.created_at;
-    const d = new Date(this.props.created_at || Date.now());
-    return `${twoDigitsString(d.getHours())}:${twoDigitsString(d.getMinutes())}`;
+interface PropsWithUsers {
+  selectedChatUsers: User[],
+  user: User
+}
+
+class Message extends Block<MessageProps & PropsWithUsers> {
+  get author(): string {
+    const user = this.props.selectedChatUsers.find((user: User) => user.id === this.props.user_id);
+    return user ? `${user.first_name} ${user.second_name}` : "N/A";
+  }
+
+  get isMine(): boolean {
+    return this.props.user_id === this.props.user.id;
   }
 
   render() {
-    return this.compile(template, {...this.props, date: this.date});
+    return this.compile(template, {
+      ...this.props,
+      date: formatDate(this.props.time),
+      author: this.author,
+      isMine: this.isMine
+    });
   }
 }
+
+export default withStore((state: State) => ({
+  selectedChatUsers: state.selectedChatUsers,
+  user: state.user!.data
+}))(Message);

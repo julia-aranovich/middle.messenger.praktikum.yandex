@@ -11,7 +11,6 @@ export interface FormProps {
   events?: {
     submit: (e: Event) => void
   },
-  iconAttach?: string,
   iconArrowRight?: string,
   className?: string
 }

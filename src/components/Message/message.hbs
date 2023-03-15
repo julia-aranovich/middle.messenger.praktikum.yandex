@@ -1,13 +1,13 @@
-<div class="message-block-wrapper {{#if my}}message-sent{{/if}}">
+<div class="message-block-wrapper {{#if isMine}}message-sent{{/if}}">
   <div class="message-block">
-    {{#unless my}}
+    {{#unless isMine}}
       <div class="author">{{author}}:</div>
     {{/unless}}
-    {{#if text}}
-      <div class="text">{{text}}</div>
+    {{#if content}}
+      <div class="text">{{content}}</div>
     {{/if}}
-    {{#if img}}
-      <img class="img" src="{{img}}" />
+    {{#if file}}
+      <img class="img" src="{{file}}" crossorigin="use-credentials" />
     {{/if}}
     <div class="date">{{date}}</div>
   </div>
