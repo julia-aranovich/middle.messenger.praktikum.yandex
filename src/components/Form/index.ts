@@ -6,6 +6,7 @@ import "./form.pcss";
 
 export interface FormProps {
   submitButton?: Block,
+  imgButton?: Block,
   fields: Block[],
   actions?: Block[],
   events?: {

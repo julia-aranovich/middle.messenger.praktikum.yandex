@@ -13,7 +13,7 @@ const REGEX_ERRORS = {
   email: "Введите коректный e-mail",
   login: "Допускаются только латинские буквы, цифры, знаки - и _ (от 6 до 16 символов).",
   display_name: "Допускаются только буквы, цифры, знаки - и _.",
-  name: "Допускаются только буквы, цифры, знак -.",
+  name: "Допускаются только буквы, знак -.",
   phone: "Введите коректный номер телефона",
   password: "Допускаются только латинские буквы, цифры, знаки - и _ (от 6 до 16 символов)."
 };
@@ -22,7 +22,8 @@ const EMAIL = {
   name: "email",
   label: "Email",
   mandatory: true,
-  regex: REGEXES.email
+  regex: REGEXES.email,
+  error_text: REGEX_ERRORS.email
 };
 
 const LOGIN = {
@@ -57,6 +58,7 @@ const SECOND_NAME = {
 const PHONE = {
   name: "phone",
   label: "Телефон",
+  mandatory: true,
   regex: REGEXES.phone,
   error_text: REGEX_ERRORS.phone
 };

@@ -1,4 +1,4 @@
-<div>
+<div class="{{className}}">
   <div id="change-photo-modal-background"></div>
   <div id="change-photo-modal">
     <form id="avatarForm">
@@ -9,7 +9,15 @@
         <label for="avatar">Выберите фото на компьютере</label>
         <input id="avatar" type="file" name="avatar" accept="image/*" />
       </div>
-      {{{submitButton}}}
+      {{#if chatId}}
+        <input id="chatId" type="hidden" name="chatId" value="{{chatId}}"/>
+      {{/if}}
+      <div class="field">
+        {{{submitButton}}}
+      </div>
+      <div class="actions">
+        {{{closeButton}}}
+      </div>
     </form>
   </div>
 </div>

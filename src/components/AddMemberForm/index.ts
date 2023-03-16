@@ -40,19 +40,20 @@ class AddMemberForm extends Block<AddMemberFormProps> {
     this.updateResults();
   }
 
-  updateResults(userSearchResults?: User[]) {
-    const results = userSearchResults || this.props.userSearchResults || [];
+  updateResults(newProps?: AddMemberFormProps) {
+    const props = newProps || this.props;
+    const results = props.userSearchResults || [];
     this.children.results = results.map(
       (user: User) => new ChatMember({
         user,
         addMode: true,
-        alreadyAdded: results.find(({id}) => id === user.id)
+        alreadyAdded: props.selectedChatUsers!.find(({id}) => id === user.id)
       })
     );
   }
 
   componentDidUpdate(_oldProps: AddMemberFormProps, _newProps: AddMemberFormProps) {
-    this.updateResults(_newProps.userSearchResults);
+    this.updateResults(_newProps);
     return true;
   }
 

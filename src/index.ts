@@ -11,7 +11,6 @@ import ServerErrorPage from "./pages/ServerErrorPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 import AuthController from "./controllers/AuthController";
-import ChatsController from "./controllers/ChatsController";
 import store from "./utils/Store";
 
 window.addEventListener("DOMContentLoaded", async () => {
@@ -39,13 +38,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   try {
     await AuthController.fetchUser();
-    const chats = await ChatsController.fetchChats();
-    if (!store.getState().selectedChatId && chats && chats[0]) {
-      await ChatsController.selectChat(chats[0].id);
-    }
-
     router.start();
     if (!isProtectedRoute) {
+      router.go(Routes.MESSENGER);
+    }
+    if (window.location.pathname === Routes.EDIT_CHAT_PAGE && !store.getState().selectedChatId) {
       router.go(Routes.MESSENGER);
     }
   } catch (e) {

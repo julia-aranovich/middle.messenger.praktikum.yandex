@@ -38,6 +38,7 @@ class AuthController {
       MessagesController.closeAll();
       await this._api.logout();
       store.set("user", undefined);
+      store.set("chats", undefined);
       router.go(Routes.LOGIN_PAGE);
     } catch (e: any) {
       store.set("user.error", e.reason);

@@ -23,8 +23,10 @@ interface PropsWithUsers {
 
 class Message extends Block<MessageProps & PropsWithUsers> {
   get author(): string {
-    const user = this.props.selectedChatUsers.find((user: User) => user.id === this.props.user_id);
-    return user ? `${user.first_name} ${user.second_name}` : "N/A";
+    const author = this.props.selectedChatUsers.find(
+      (user: User) => user.id === this.props.user_id
+    );
+    return author ? `${author.first_name} ${author.second_name}` : "N/A";
   }
 
   get isMine(): boolean {

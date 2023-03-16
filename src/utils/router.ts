@@ -2,6 +2,7 @@ import Block from "./Block";
 
 import isEqual from "../helpers/isEqual";
 import {Indexed} from "./types";
+import store from "./Store";
 
 export enum Routes {
   CHANGE_PASSWORD_PAGE = "/change-password",
@@ -101,6 +102,7 @@ class Router<P extends Record<string, any> = any> {
 
   go(pathname: string): void {
     if (window.location.pathname === pathname) return;
+    store.set("user.error", undefined);
     this.history.pushState({}, "", pathname);
     this._onRoute(pathname);
   }

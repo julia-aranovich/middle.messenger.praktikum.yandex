@@ -39,7 +39,11 @@ class EditChatPage extends Block<EditChatPageProps> {
 
     this.children.changeAvatarModal = new (withStore((state: State) => ({
       selectedChatId: state.selectedChatId
-    }))(withControllers(ChangeAvatarModal, {controller: ChatsController})))({});
+    }))(withControllers(ChangeAvatarModal, {
+      controller: ChatsController,
+      className: "centered-form",
+      chatId: this.props.selectedChatId
+    })))({});
 
     this.children.chageAvatarLink = new Button({
       text: "Загрузить аватар",
@@ -52,23 +56,24 @@ class EditChatPage extends Block<EditChatPageProps> {
       }
     });
 
-    this.children.avatar = new Avatar({
-      avatar: this.props.selectedChat!.avatar,
-      title: this.props.selectedChat!.title,
-      size: AVATAR_SIZES.MEDIUM
-    });
-
     this.updateMembers();
   }
 
-  updateMembers(selectedChatUsers?: User[]) {
-    this.children.members = (selectedChatUsers || this.props.selectedChatUsers || []).map(
+  updateMembers(newProps?: EditChatPageProps) {
+    const props = newProps || this.props;
+    this.children.avatar = new Avatar({
+      avatar: props.selectedChat?.avatar,
+      title: props.selectedChat?.title || "",
+      size: AVATAR_SIZES.MEDIUM
+    });
+
+    this.children.members = (props.selectedChatUsers || []).map(
       (user: User) => new ChatMember({user})
     );
   }
 
   componentDidUpdate(_oldProps: EditChatPageProps, _newProps: EditChatPageProps) {
-    this.updateMembers(_newProps.selectedChatUsers);
+    this.updateMembers(_newProps);
     return true;
   }
 

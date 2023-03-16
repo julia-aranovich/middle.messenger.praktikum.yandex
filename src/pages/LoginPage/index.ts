@@ -11,17 +11,11 @@ import PAGE_FIELDS from "../../utils/fields";
 import template from "./login_page.hbs";
 
 import AuthController from "../../controllers/AuthController";
-import ChatsController from "../../controllers/ChatsController";
 import {SigninData} from "../../api/AuthAPI";
 import withUser, {PropsWithUser} from "../../hocs/withUser";
 import withControllers from "../../hocs/withControllers";
 
-interface PropsWithControllers {
-  auth: typeof AuthController,
-  chats: typeof ChatsController
-}
-
-class LoginPage extends Block<PropsWithUser & PropsWithControllers> {
+class LoginPage extends Block<PropsWithUser & {auth: typeof AuthController}> {
   init() {
     this.children.form = new Form({
       events: {
@@ -44,7 +38,6 @@ class LoginPage extends Block<PropsWithUser & PropsWithControllers> {
     e.preventDefault();
     if ((this.children.form as Form).isValid()) {
       await this.props.auth.signin((this.children.form as Form).data as SigninData);
-      await this.props.chats.fetchChats();
     }
   }
 
@@ -53,4 +46,4 @@ class LoginPage extends Block<PropsWithUser & PropsWithControllers> {
   }
 }
 
-export default withUser(withControllers(LoginPage, {auth: AuthController, chats: ChatsController}));
+export default withUser(withControllers(LoginPage, {auth: AuthController}));

@@ -9,7 +9,8 @@ import "./change_avatar_modal.pcss";
 
 interface ChangeAvatarModalProps {
   controller: typeof UserController | typeof ChatsController,
-  selectedChatId?: number
+  chatId?: number,
+  className?: string
 }
 
 export default class ChangeAvatarModal extends Block<ChangeAvatarModalProps> {
@@ -20,13 +21,25 @@ export default class ChangeAvatarModal extends Block<ChangeAvatarModalProps> {
         click: (e) => this.onSubmit(e)
       }
     });
+    this.children.closeButton = new Button({
+      secondary: true,
+      text: "Закрыть",
+      events: {
+        click: (e) => {
+          e.preventDefault();
+          this.hide();
+        }
+      }
+    });
   }
 
   async onSubmit(e: Event) {
     e.preventDefault();
     const form = new FormData(document.getElementById("avatarForm") as HTMLFormElement);
-    await this.props.controller.updateAvatar(form);
-    this.hide();
+    if ((form.get("avatar") as File).name) {
+      await this.props.controller.updateAvatar(form);
+      this.hide();
+    }
   }
 
   componentDidMount() {

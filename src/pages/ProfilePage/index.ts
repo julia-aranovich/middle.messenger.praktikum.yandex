@@ -18,13 +18,11 @@ import AuthController from "../../controllers/AuthController";
 import UserController from "../../controllers/UserController";
 import {User} from "../../api/AuthAPI";
 
-class ProfilePage extends Block<PropsWithUser & {auth: typeof AuthController}> {
+type ProfilePageProps = PropsWithUser & { auth: typeof AuthController };
+
+class ProfilePage extends Block<ProfilePageProps> {
   init() {
-    this.children.avatar = new Avatar({
-      avatar: this.props.avatar,
-      title: this.props.first_name || this.props.login,
-      size: AVATAR_SIZES.LARGE
-    });
+    this.generateAvatar();
 
     this.children.changeAvatarModal = new (withControllers(ChangeAvatarModal, {
       controller: UserController
@@ -66,6 +64,20 @@ class ProfilePage extends Block<PropsWithUser & {auth: typeof AuthController}> {
         value: this.props[field.name as keyof User]
       }))
     });
+  }
+
+  generateAvatar(newProps?: ProfilePageProps) {
+    const props = newProps || this.props;
+    this.children.avatar = new Avatar({
+      avatar: props.avatar,
+      title: props.first_name || props.login,
+      size: AVATAR_SIZES.LARGE
+    });
+  }
+
+  componentDidUpdate(_olsProps: ProfilePageProps, _newProps: ProfilePageProps) {
+    this.generateAvatar(_newProps);
+    return true;
   }
 
   render() {

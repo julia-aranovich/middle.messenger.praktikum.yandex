@@ -18,7 +18,8 @@ import Link from "../Link";
 interface SidebarProps extends PropsWithRouter {
   chats: ChatInfo[],
   selectedChatId?: number,
-  chatsController: typeof ChatsController
+  chatsController: typeof ChatsController,
+  isLoaded?: false
 }
 
 class Sidebar extends Block<SidebarProps> {

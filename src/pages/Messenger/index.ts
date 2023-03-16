@@ -33,6 +33,11 @@ interface MessengerProps {
 class Messenger extends Block<MessengerProps> {
   init() {
     this.children.sidebar = new Sidebar({});
+
+    this.props.chatsController.fetchChats().finally(() => {
+      (this.children.sidebar as Block).setProps({isLoaded: true});
+    });
+
     this.children.editChatLink = new Link({
       to: Routes.EDIT_CHAT_PAGE,
       text: "Управление чатом",
@@ -40,16 +45,16 @@ class Messenger extends Block<MessengerProps> {
     });
     this.children.form = new Form({
       className: "chat-message-form",
+      events: {
+        submit: (e: Event) => this.sendMessage(e)
+      },
       fields: [new Field({
         type: "textarea",
         name: "message"
       })],
-      submitButton: new Button({
+      imgButton: new Button({
         text: "Отправить сообщение",
-        img: iconArrowRight,
-        events: {
-          click: (e: Event) => this.sendMessage(e)
-        }
+        img: iconArrowRight
       })
     });
 
@@ -78,14 +83,16 @@ class Messenger extends Block<MessengerProps> {
   sendMessage(e: Event) {
     e.preventDefault();
     const {message} = (this.children.form as Form).data;
-    ((this.children.form as Form).children.fields as Field[])[0].setValue("");
-    MessagesController.sendMessage(this.props.selectedChatId!, message);
+    if (message.trim()) {
+      ((this.children.form as Form).children.fields as Field[])[0].setValue("");
+      MessagesController.sendMessage(this.props.selectedChatId!, message);
+    }
   }
 
   get subtitle(): string {
-    const {last_message} = this.props.selectedChat || {};
-    return last_message ?
-      new Date(last_message.time).toLocaleDateString("ru-Ru") : "В чате пока нет сообщений";
+    const lastMessage = (this.props.selectedChat || {}).last_message;
+    return lastMessage ?
+      new Date(lastMessage.time).toLocaleDateString("ru-Ru") : "В чате пока нет сообщений";
   }
 
   render() {
@@ -101,7 +108,7 @@ export default withStore((state: State) => ({
   selectedChatUsers: state.selectedChatUsers,
   selectedChat: state.selectedChatId &&
     state.chats?.find((chat) => chat.id === state.selectedChatId),
-  messages: state.messages && state.selectedChatId && state.messages[state.selectedChatId] || []
+  messages: (state.messages && state.selectedChatId && state.messages[state.selectedChatId]) || []
 }))(
   withControllers(Messenger, {chatsController: ChatsController})
 );

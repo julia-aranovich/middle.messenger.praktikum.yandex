@@ -1,4 +1,5 @@
 import API, {ChatsAPI, ChatInfo} from "../api/ChatsAPI";
+import router, {Routes} from "../utils/Router";
 import store from "../utils/Store";
 import MessagesController from "./MessagesController";
 
@@ -11,7 +12,7 @@ class ChatsController {
 
   async createChat(title: string) {
     await this._api.create(title);
-    this.fetchChats();
+    await this.fetchChats();
   }
 
   async fetchChats(data?: Record<string, string | number>): Promise<ChatInfo[]> {
@@ -51,9 +52,9 @@ class ChatsController {
 
   async deleteChat(id: number) {
     await this._api.delete(id);
-    const chats = this.fetchChats();
-    // @ts-ignore
-    await this.selectChat(chats[0]!.id);
+    await this.fetchChats();
+    store.set("selectedChatId", undefined);
+    router.go(Routes.MESSENGER);
   }
 
   getToken(id: number) {
