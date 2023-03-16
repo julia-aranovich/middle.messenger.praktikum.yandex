@@ -6,7 +6,7 @@ import template from "./add_member_form.hbs";
 import "./add_member_form.pcss";
 
 import withStore from "../../hocs/withStore";
-import {State} from "../../utils/Store";
+import {State} from "../../utils/storage";
 import withControllers from "../../hocs/withControllers";
 import UserController from "../../controllers/UserController";
 

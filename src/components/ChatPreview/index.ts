@@ -5,7 +5,7 @@ import {ChatInfo} from "../../api/ChatsAPI";
 import template from "./chat_preview.hbs";
 import "./chat_preview.pcss";
 import withStore from "../../hocs/withStore";
-import {State} from "../../utils/Store";
+import {State} from "../../utils/storage";
 import {formatDate} from "../Message";
 
 export type ChatPreviewProps = {

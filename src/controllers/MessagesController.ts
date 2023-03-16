@@ -1,5 +1,5 @@
 import WS, {WSEvents, Message} from "../utils/WS";
-import store from "../utils/Store";
+import store from "../utils/storage";
 
 class MessagesController {
   private sockets: Map<number, WS> = new Map();

@@ -6,7 +6,7 @@ import Form from "../../components/Form";
 import Avatar, {AVATAR_SIZES} from "../../components/Avatar";
 import {User} from "../../api/AuthAPI";
 
-import {Routes} from "../../utils/Router";
+import {Routes} from "../../utils/navigation";
 
 import template from "./update_profile_page.hbs";
 import PAGE_FIELDS from "../../utils/fields";

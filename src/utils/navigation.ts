@@ -2,7 +2,7 @@ import Block from "./Block";
 
 import isEqual from "../helpers/isEqual";
 import {Indexed} from "./types";
-import store from "./Store";
+import store from "./storage";
 
 export enum Routes {
   CHANGE_PASSWORD_PAGE = "/change-password",

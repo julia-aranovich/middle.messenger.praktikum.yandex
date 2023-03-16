@@ -6,7 +6,7 @@ import Field, {FieldProps} from "../../components/Field";
 import Form from "../../components/Form";
 import Avatar, {AVATAR_SIZES} from "../../components/Avatar";
 
-import {Routes} from "../../utils/Router";
+import {Routes} from "../../utils/navigation";
 import PAGE_FIELDS from "../../utils/fields";
 
 import template from "./profile_page.hbs";

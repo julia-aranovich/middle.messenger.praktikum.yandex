@@ -1,4 +1,4 @@
-import HTTP from "../utils/HTTP";
+import HTTP from "../utils/http";
 
 type ID = string | number;
 

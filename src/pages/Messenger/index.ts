@@ -7,7 +7,7 @@ import Button from "../../components/Button";
 
 import template from "./messenger.hbs";
 import "./messenger.pcss";
-import {State} from "../../utils/Store";
+import {State} from "../../utils/storage";
 import withStore from "../../hocs/withStore";
 import withControllers from "../../hocs/withControllers";
 import ChatsController from "../../controllers/ChatsController";
@@ -18,7 +18,7 @@ import MessageComponent from "../../components/Message";
 import {ChatInfo} from "../../api/ChatsAPI";
 import {User} from "../../api/AuthAPI";
 import {Message} from "../../utils/WS";
-import {Routes} from "../../utils/Router";
+import {Routes} from "../../utils/navigation";
 
 import iconArrowRight from "../../../static/icons/icon_arrow_right.svg";
 

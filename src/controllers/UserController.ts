@@ -1,6 +1,6 @@
 import API, {UserAPI, UpdateProfileData, UpdatePasswordData} from "../api/UserAPI";
-import router, {Routes} from "../utils/Router";
-import store from "../utils/Store";
+import router, {Routes} from "../utils/navigation";
+import store from "../utils/storage";
 
 class UserController {
   private readonly _api: UserAPI;

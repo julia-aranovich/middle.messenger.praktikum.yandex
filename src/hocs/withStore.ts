@@ -1,6 +1,6 @@
 import isEqual from "../helpers/isEqual";
 import Block from "../utils/Block";
-import store, {StoreEvents, State} from "../utils/Store";
+import store, {StoreEvents, State} from "../utils/storage";
 
 const withStore = (mapStateToProps: (state: State) => any) => (Component: typeof Block<any>) => {
   let propsFromState: any;

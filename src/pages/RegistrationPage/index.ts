@@ -5,7 +5,7 @@ import Link from "../../components/Link";
 import Field, {FieldProps} from "../../components/Field";
 import Form from "../../components/Form";
 
-import {Routes} from "../../utils/Router";
+import {Routes} from "../../utils/navigation";
 import PAGE_FIELDS from "../../utils/fields";
 
 import template from "./registration_page.hbs";

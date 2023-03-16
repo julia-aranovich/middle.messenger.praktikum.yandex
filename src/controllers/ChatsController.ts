@@ -1,6 +1,6 @@
 import API, {ChatsAPI, ChatInfo} from "../api/ChatsAPI";
-import router, {Routes} from "../utils/Router";
-import store from "../utils/Store";
+import router, {Routes} from "../utils/navigation";
+import store from "../utils/storage";
 import MessagesController from "./MessagesController";
 
 class ChatsController {

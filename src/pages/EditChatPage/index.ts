@@ -3,7 +3,7 @@ import Sidebar from "../../components/Sidebar";
 
 import template from "./edit_chat_page.hbs";
 import "./edit_chat_page.pcss";
-import {State} from "../../utils/Store";
+import {State} from "../../utils/storage";
 import withStore from "../../hocs/withStore";
 import withControllers from "../../hocs/withControllers";
 import ChatsController from "../../controllers/ChatsController";

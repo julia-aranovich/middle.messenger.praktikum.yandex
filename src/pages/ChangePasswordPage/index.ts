@@ -6,14 +6,14 @@ import Field, {FieldProps} from "../../components/Field";
 import Form from "../../components/Form";
 import Avatar, {AVATAR_SIZES} from "../../components/Avatar";
 
-import {Routes} from "../../utils/Router";
+import {Routes} from "../../utils/navigation";
 import PAGE_FIELDS from "../../utils/fields";
 import withUser, {PropsWithUser} from "../../hocs/withUser";
 import withControllers from "../../hocs/withControllers";
 import UserController from "../../controllers/UserController";
 
 import template from "./change_password_page.hbs";
-import store from "../../utils/Store";
+import store from "../../utils/storage";
 import AuthController from "../../controllers/AuthController";
 
 class ChangePasswordForm extends Form {

@@ -1,4 +1,4 @@
-import router, {Routes} from "./utils/Router";
+import router, {Routes} from "./utils/navigation";
 
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
@@ -11,7 +11,7 @@ import ServerErrorPage from "./pages/ServerErrorPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 import AuthController from "./controllers/AuthController";
-import store from "./utils/Store";
+import store from "./utils/storage";
 
 window.addEventListener("DOMContentLoaded", async () => {
   router

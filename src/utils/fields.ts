@@ -1,4 +1,4 @@
-import {Routes} from "./Router";
+import {Routes} from "./navigation";
 
 const REGEXES = {
   email: "(.+)@(.+){2,}\\.(.+){2,}",

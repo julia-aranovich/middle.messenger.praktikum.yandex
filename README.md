@@ -22,7 +22,7 @@
 - Для управления и подпсиок на события используется класс <a href="https://github.com/julia-aranovich/middle.messenger.praktikum.yandex/blob/sprint_3/src/utils/EventBus.ts" target="_blank" title="EventBus">EventBus</a>
 - Для осуществления запросов к API подготовлен класс <a href="https://github.com/julia-aranovich/middle.messenger.praktikum.yandex/blob/sprint_3/src/utils/HTTP.ts" target="_blank" title="HTTP">HTTP</a>
 - Для работы с сообщениями в чатах подготовлен класс для работы с WebSockets <a href="https://github.com/julia-aranovich/middle.messenger.praktikum.yandex/blob/sprint_3/src/utils/WS.ts" target="_blank" title="WebSockets">WS</a>
-- Для роутинга приложения реализован класс <a href="https://github.com/julia-aranovich/middle.messenger.praktikum.yandex/blob/sprint_3/src/utils/Router.ts" target="_blank" title="Router">Router</a>
+- Для роутинга приложения реализован класс <a href="https://github.com/julia-aranovich/middle.messenger.praktikum.yandex/blob/sprint_3/src/utils/navigation.ts" target="_blank" title="Router">Router</a>
 
 ## Линтинг
 

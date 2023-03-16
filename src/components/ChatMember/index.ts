@@ -6,7 +6,7 @@ import Button from "../Button";
 
 import template from "./chat_member.hbs";
 import "./chat_member.pcss";
-import {State} from "../../utils/Store";
+import {State} from "../../utils/storage";
 import {User} from "../../api/AuthAPI";
 
 interface ChatMemberProps {

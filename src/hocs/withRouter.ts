@@ -1,5 +1,5 @@
 import Block from "../utils/Block";
-import router from "../utils/Router";
+import router from "../utils/navigation";
 
 export default function withRouter(Component: typeof Block<any>) {
   return class WithRouter extends Component {

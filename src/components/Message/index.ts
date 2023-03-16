@@ -1,7 +1,7 @@
 import { User } from "../../api/AuthAPI";
 import withStore from "../../hocs/withStore";
 import Block from "../../utils/Block";
-import { State } from "../../utils/Store";
+import { State } from "../../utils/storage";
 import {Message as MessageProps} from "../../utils/WS";
 
 import template from "./message.hbs";
