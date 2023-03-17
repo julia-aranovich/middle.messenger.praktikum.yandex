@@ -41,8 +41,12 @@ class UserController {
 
   async findUser(login: string) {
     store.set("userSearchResults", undefined);
-    const users = await this._api.findUser({login});
-    store.set("userSearchResults", users);
+    try {
+      const users = await this._api.findUser({ login });
+      store.set("userSearchResults", users);
+    } catch (e: any) {
+      store.set("error", e.reason);
+    }
   }
 }
 

@@ -38,6 +38,9 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   try {
     await AuthController.fetchUser();
+    if (!store.getState().user!.data) {
+      throw Error("Пользователь не авторизован");
+    }
     router.start();
     if (!isProtectedRoute) {
       router.go(Routes.MESSENGER);

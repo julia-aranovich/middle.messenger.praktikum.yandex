@@ -9,43 +9,55 @@ class MessagesController {
       return;
     }
 
-    const userId = store.getState().user!.data.id;
-
-    const wsTransport = new WS(`wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`);
-
-    this.sockets.set(id, wsTransport);
-
-    await wsTransport.connect();
-
-    this.subscribe(wsTransport, id);
-    this.fetchOldMessages(id);
+    try {
+      const userId = store.getState().user!.data.id;
+      const wsTransport = new WS(`wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`);
+      this.sockets.set(id, wsTransport);
+      await wsTransport.connect();
+      this.subscribe(wsTransport, id);
+      this.fetchOldMessages(id);
+    } catch (e: any) {
+      store.set("error", `Chat #${id}: ${e.reason}`);
+    }
   }
 
   sendMessage(id: number, message: string) {
     const socket = this.sockets.get(id);
 
     if (!socket) {
-      throw new Error(`Chat ${id} is not connected`);
+      store.set("error", `Chat #${id}: Chat is not connected`);
+    } else {
+      try {
+        socket.send({
+          type: "message",
+          content: message
+        });
+      } catch (e:any) {
+        store.set("error", `Chat #${id}: ${e.reason}`);
+      }
     }
-
-    socket.send({
-      type: "message",
-      content: message
-    });
   }
 
   fetchOldMessages(id: number) {
     const socket = this.sockets.get(id);
 
     if (!socket) {
-      throw new Error(`Chat ${id} is not connected`);
+      store.set("error", `Chat #${id}: Chat is not connected`);
+    } else {
+      try {
+        socket.send({ type: "get old", content: "0" });
+      } catch (e: any) {
+        store.set("error", `Chat #${id}: ${e.reason}`);
+      }
     }
-
-    socket.send({type: "get old", content: "0" });
   }
 
   closeAll() {
-    Array.from(this.sockets.values()).forEach((socket) => socket.close());
+    try {
+      Array.from(this.sockets.values()).forEach((socket) => socket.close());
+    } catch (e: any) {
+      store.set("error", e.reason);
+    }
   }
 
   private onMessage(id: number, messages: Message | Message[]) {

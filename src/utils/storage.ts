@@ -18,7 +18,8 @@ export interface State {
   selectedChatUsers?: User[],
   messages?: Record<number, Message[]>,
   chats?: ChatInfo[],
-  userSearchResults?: User[]
+  userSearchResults?: User[],
+  error?: string
 }
 
 class Store extends EventBus {

@@ -46,10 +46,14 @@ class AuthController {
   }
 
   async fetchUser() {
-    store.set("user.isLoading", true);
-    const user = await this._api.read();
-    store.set("user.data", user);
-    store.set("user.isLoading", false);
+    try {
+      store.set("user.isLoading", true);
+      const user = await this._api.read();
+      store.set("user.data", user);
+      store.set("user.isLoading", false);
+    } catch (e: any) {
+      store.set("user.error", undefined);
+    }
   }
 }
 
