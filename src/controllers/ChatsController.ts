@@ -2,6 +2,7 @@ import API, {ChatsAPI, ChatInfo} from "../api/ChatsAPI";
 import router, {Routes} from "../utils/navigation";
 import store from "../utils/storage";
 import MessagesController from "./MessagesController";
+import {ErrorWithReason} from "../utils/types";
 
 class ChatsController {
   private readonly _api: ChatsAPI;
@@ -14,8 +15,8 @@ class ChatsController {
     try {
       await this._api.create(title);
       await this.fetchChats();
-    } catch (e: any) {
-      store.set("error", e.reason);
+    } catch (e: unknown) {
+      store.set("error", (e as ErrorWithReason).reason);
     }
   }
 
@@ -37,8 +38,8 @@ class ChatsController {
         //   .sort((chat1, chat2) => chat1.unread_count - chat2.unread_count ||
         //     chat1.title.localeCompare(chat2.title))
       );
-    } catch (e: any) {
-      store.set("error", e.reason);
+    } catch (e: unknown) {
+      store.set("error", (e as ErrorWithReason).reason);
     }
     return chats;
   }
@@ -48,8 +49,8 @@ class ChatsController {
       await this._api.addUsers(id, [userId]);
       const users = await this._api.getUsers(id);
       store.set("selectedChatUsers", users);
-    } catch (e: any) {
-      store.set("error", e.reason);
+    } catch (e: unknown) {
+      store.set("error", (e as ErrorWithReason).reason);
     }
   }
 
@@ -58,8 +59,8 @@ class ChatsController {
       await this._api.deleteUsers(id, [userId]);
       const users = await this._api.getUsers(id);
       store.set("selectedChatUsers", users);
-    } catch (e: any) {
-      store.set("error", e.reason);
+    } catch (e: unknown) {
+      store.set("error", (e as ErrorWithReason).reason);
     }
   }
 
@@ -67,8 +68,8 @@ class ChatsController {
     try {
       await this._api.updateAvatar(formData);
       this.fetchChats();
-    } catch (e: any) {
-      store.set("error", e.reason);
+    } catch (e: unknown) {
+      store.set("error", (e as ErrorWithReason).reason);
     }
   }
 
@@ -78,8 +79,8 @@ class ChatsController {
       await this.fetchChats();
       store.set("selectedChatId", undefined);
       router.go(Routes.MESSENGER);
-    } catch (e: any) {
-      store.set("error", e.reason);
+    } catch (e: unknown) {
+      store.set("error", (e as ErrorWithReason).reason);
     }
   }
 
@@ -87,8 +88,8 @@ class ChatsController {
     let token;
     try {
       token = this._api.getToken(id);
-    } catch (e: any) {
-      store.set("error", e.reason);
+    } catch (e: unknown) {
+      store.set("error", (e as ErrorWithReason).reason);
     }
     return token;
   }
@@ -98,8 +99,8 @@ class ChatsController {
       const users = await this._api.getUsers(id);
       store.set("selectedChatUsers", users);
       store.set("selectedChatId", id);
-    } catch (e: any) {
-      store.set("error", e.reason);
+    } catch (e: unknown) {
+      store.set("error", (e as ErrorWithReason).reason);
     }
   }
 }

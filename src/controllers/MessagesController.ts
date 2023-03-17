@@ -1,5 +1,6 @@
 import WS, {WSEvents, Message} from "../utils/WS";
 import store from "../utils/storage";
+import {ErrorWithReason} from "../utils/types";
 
 class MessagesController {
   private sockets: Map<number, WS> = new Map();
@@ -16,8 +17,8 @@ class MessagesController {
       await wsTransport.connect();
       this.subscribe(wsTransport, id);
       this.fetchOldMessages(id);
-    } catch (e: any) {
-      store.set("error", `Chat #${id}: ${e.reason}`);
+    } catch (e: unknown) {
+      store.set("error", `Chat #${id}: ${(e as ErrorWithReason).reason}`);
     }
   }
 
@@ -32,8 +33,8 @@ class MessagesController {
           type: "message",
           content: message
         });
-      } catch (e:any) {
-        store.set("error", `Chat #${id}: ${e.reason}`);
+      } catch (e: unknown) {
+        store.set("error", `Chat #${id}: ${(e as ErrorWithReason).reason}`);
       }
     }
   }
@@ -46,8 +47,8 @@ class MessagesController {
     } else {
       try {
         socket.send({ type: "get old", content: "0" });
-      } catch (e: any) {
-        store.set("error", `Chat #${id}: ${e.reason}`);
+      } catch (e: unknown) {
+        store.set("error", `Chat #${id}: ${(e as ErrorWithReason).reason}`);
       }
     }
   }
@@ -55,8 +56,8 @@ class MessagesController {
   closeAll() {
     try {
       Array.from(this.sockets.values()).forEach((socket) => socket.close());
-    } catch (e: any) {
-      store.set("error", e.reason);
+    } catch (e: unknown) {
+      store.set("error", (e as ErrorWithReason).reason);
     }
   }
 
