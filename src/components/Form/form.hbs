@@ -1,10 +1,15 @@
-<form>
+<form class="{{className}}">
   {{#each fields}}
     {{{this}}}
   {{/each}}
-  <div class="field">
-    {{{submitButton}}}
-  </div>
+  {{#if submitButton}}
+    <div class="field">
+      {{{submitButton}}}
+    </div>
+  {{/if}}
+  {{#if imgButton}}
+    {{{imgButton}}}
+  {{/if}}
   {{#if actions}}
     <div class="actions">
       {{#each actions}}

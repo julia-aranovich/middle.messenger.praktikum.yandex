@@ -1,45 +1,49 @@
 import Block from "../../utils/Block";
 
 import Button from "../../components/Button";
+import Link from "../../components/Link";
 import Field, {FieldProps} from "../../components/Field";
 import Form from "../../components/Form";
 
-import {CHAT_LIST_PAGE, LOGIN_PAGE, REGISTRATION_PAGE} from "../../utils/routes";
+import {Routes} from "../../utils/navigation";
 import PAGE_FIELDS from "../../utils/fields";
 
 import template from "./login_page.hbs";
 
-export default class LoginPage extends Block {
+import AuthController from "../../controllers/AuthController";
+import {SigninData} from "../../api/AuthAPI";
+import withUser, {PropsWithUser} from "../../hocs/withUser";
+import withControllers from "../../hocs/withControllers";
+
+class LoginPage extends Block<PropsWithUser & {auth: typeof AuthController}> {
   init() {
     this.children.form = new Form({
       events: {
-        submit: (e: Event) => {
-          e.preventDefault();
-          (<Form> this.children.form).logData();
-          if ((<Form> this.children.form).isValid()) {
-            window.renderPage(CHAT_LIST_PAGE);
-          }
-        }
+        submit: (e) => this.onSubmit(e)
       },
-      children: {
-        submitButton: new Button({
-          text: "Войти"
-        }),
-        actions: [
-          new Button({
-            text: "Зарегистрироваться",
-            secondary: true,
-            events: {
-              click: () => window.renderPage(REGISTRATION_PAGE)
-            }
-          })
-        ],
-        fields: PAGE_FIELDS[LOGIN_PAGE].map((field: FieldProps): Block => new Field(field))
-      }
+      submitButton: new Button({
+        text: "Войти"
+      }),
+      actions: [
+        new Link({
+          to: Routes.REGISTRATION_PAGE,
+          text: "Зарегистрироваться"
+        })
+      ],
+      fields: PAGE_FIELDS[Routes.LOGIN_PAGE].map((field: FieldProps): Block => new Field(field))
     });
   }
 
+  async onSubmit(e: Event) {
+    e.preventDefault();
+    if ((this.children.form as Form).isValid()) {
+      await this.props.auth.signin((this.children.form as Form).data as SigninData);
+    }
+  }
+
   render() {
-    return this.compile(template, {});
+    return this.compile(template, this.props);
   }
 }
+
+export default withUser(withControllers(LoginPage, {auth: AuthController}));

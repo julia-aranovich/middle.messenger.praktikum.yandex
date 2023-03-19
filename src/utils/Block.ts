@@ -1,10 +1,10 @@
 import {v4 as makeUUID} from "uuid";
+import {TemplateDelegate} from "handlebars";
 
 import EventBus from "./EventBus";
-import {Props} from "./types";
 
-type Children = Record<string, Block>;
-export default class Block {
+type Children = Record<string, Block | Block[]>;
+export default class Block<P extends Record<string, any> = any> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -18,14 +18,14 @@ export default class Block {
 
   private eventBus: () => EventBus;
 
-  props: Props;
+  props: P;
 
   public children: Children;
 
-  constructor(propsAndChildren: Props = {}) {
-    const {children, props} = this._getChildren(propsAndChildren);
+  constructor(propsAndChildren: P = {} as P) {
+    const {children, props} = this._getChildrenAndProps(propsAndChildren);
     this.children = children;
-    this.props = this._makePropsProxy({ ...props, id: this.id});
+    this.props = this._makePropsProxy({...props, id: this.id});
 
     const eventBus = new EventBus();
     this.eventBus = () => eventBus;
@@ -34,15 +34,15 @@ export default class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  private _getChildren(propsAndChildren: Props) {
+  private _getChildrenAndProps(propsAndChildren: P) {
     const children: Children = {};
-    const props: Props = {};
+    const props: P = {} as P;
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (value instanceof Block) {
+      if (value instanceof Block || (Array.isArray(value) && value[0] instanceof Block)) {
         children[key] = value;
       } else {
-        props[key] = value;
+        props[key as keyof P] = value;
       }
     });
 
@@ -52,7 +52,6 @@ export default class Block {
   private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    // @ts-ignore Miss args declaration here, just context binding
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
@@ -74,21 +73,21 @@ export default class Block {
     stub?.replaceWith(child.getContent());
   }
 
-  protected compile(template: (props: Props) => string, props: Props) {
-    const propsAndStubs: Props = {...props};
+  protected compile(template: TemplateDelegate, context: any) {
+    const contextAndStubs = {...context};
 
-    Object.entries(this.children).forEach(([name, child]: [string, Block | Block[]]) => {
+    Object.entries(this.children).forEach(([name, child]) => {
       if (Array.isArray(child)) {
-        propsAndStubs[name] = child.map((childEl: Block) => `<div data-id="${childEl.id}"></div>`);
+        contextAndStubs[name] = child.map((childEl: Block) => `<div data-id="${childEl.id}"></div>`);
       } else {
-        propsAndStubs[name] = `<div data-id="${child.id}"></div>`;
+        contextAndStubs[name] = `<div data-id="${child.id}"></div>`;
       }
     });
 
     const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
-    fragment.innerHTML = template(propsAndStubs);
+    fragment.innerHTML = template(contextAndStubs);
 
-    Object.values(this.children).forEach((child: Block | Block[]) => {
+    Object.values(this.children).forEach((child) => {
       if (Array.isArray(child)) {
         child.forEach((childEl) => {
           this._replaceStub(fragment, childEl);
@@ -121,7 +120,7 @@ export default class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps: Props, newProps: Props): void {
+  private _componentDidUpdate(oldProps: P, newProps: P): void {
     const response: boolean = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -129,12 +128,11 @@ export default class Block {
     this._render();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected componentDidUpdate(_oldProps: Props, _newProps: Props): boolean {
+  protected componentDidUpdate(_oldProps: P, _newProps: P): boolean {
     return true;
   }
 
-  public setProps = (nextProps: Props): void => {
+  public setProps = (nextProps: Partial<P>): void => {
     if (!nextProps) {
       return;
     }
@@ -163,8 +161,8 @@ export default class Block {
   }
 
   private _render(): void {
-    const fragment = this.render() as unknown as HTMLTemplateElement;
-    const newElement = fragment.firstElementChild as HTMLElement;
+    const fragment = this.render();
+    const newElement = (fragment as DocumentFragment).firstElementChild as HTMLElement;
     if (this._element) {
       this._removeEvents();
       this._element.replaceWith(newElement);
@@ -173,25 +171,26 @@ export default class Block {
     this._addEvents();
   }
 
-  protected render() {}
+  protected render(): DocumentFragment | null {
+    return null;
+  }
 
   getContent() {
     return this.element;
   }
 
-  _makePropsProxy(props: Props): ProxyHandler<Props> {
+  _makePropsProxy(props: P): P {
     const self = this;
 
     return new Proxy(props, {
-      get(target: Props, prop: string) {
-        const value = target[prop];
+      get(target, prop) {
+        const value = target[prop as keyof P];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target: Props, prop: string, value) {
+      set(target, prop, value) {
         // the following clone to be improved
         const oldProps = {...target};
-        // eslint-disable-next-line no-param-reassign
-        target[prop] = value;
+        target[prop as keyof P] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
         return true;
       },

@@ -105,10 +105,15 @@ a {
   }
 }
 
-.visible {
-  visibility: visible;
-}
-
-.hidden {
-  visibility: hidden;
+p.message {
+  &.error {
+    color: red;
+    display: block;
+    border: 1px solid red;
+    padding: 0.4em 0.8em;
+    border-radius: 4px;
+    font-size: 0.8em;
+    text-align: center;
+    background: rgba(256 0 0 / 10%);
+  }
 }

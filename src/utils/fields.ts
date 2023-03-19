@@ -1,6 +1,4 @@
-import {
-  CHANGE_PASSWORD_PAGE, LOGIN_PAGE, PROFILE_PAGE, REGISTRATION_PAGE
-} from "./routes";
+import {Routes} from "./navigation";
 
 const REGEXES = {
   email: "(.+)@(.+){2,}\\.(.+){2,}",
@@ -15,7 +13,7 @@ const REGEX_ERRORS = {
   email: "Введите коректный e-mail",
   login: "Допускаются только латинские буквы, цифры, знаки - и _ (от 6 до 16 символов).",
   display_name: "Допускаются только буквы, цифры, знаки - и _.",
-  name: "Допускаются только буквы, цифры, знак -.",
+  name: "Допускаются только буквы, знак -.",
   phone: "Введите коректный номер телефона",
   password: "Допускаются только латинские буквы, цифры, знаки - и _ (от 6 до 16 символов)."
 };
@@ -24,7 +22,8 @@ const EMAIL = {
   name: "email",
   label: "Email",
   mandatory: true,
-  regex: REGEXES.email
+  regex: REGEXES.email,
+  error_text: REGEX_ERRORS.email
 };
 
 const LOGIN = {
@@ -59,6 +58,7 @@ const SECOND_NAME = {
 const PHONE = {
   name: "phone",
   label: "Телефон",
+  mandatory: true,
   regex: REGEXES.phone,
   error_text: REGEX_ERRORS.phone
 };
@@ -99,17 +99,12 @@ const REPEAT_PASSWORD = {
   error_text: REGEX_ERRORS.password
 };
 
-export const SEARCH = {
-  name: "search",
-  placeholder: "Поиск по чатам"
-};
-
 const PAGE_FIELDS = {
-  [LOGIN_PAGE]: [
+  [Routes.LOGIN_PAGE]: [
     LOGIN,
     PASSWORD
   ],
-  [REGISTRATION_PAGE]: [
+  [Routes.REGISTRATION_PAGE]: [
     EMAIL,
     LOGIN,
     FIRST_NAME,
@@ -118,7 +113,7 @@ const PAGE_FIELDS = {
     PASSWORD,
     REPEAT_PASSWORD
   ],
-  [PROFILE_PAGE]: [
+  [Routes.PROFILE_PAGE]: [
     EMAIL,
     LOGIN,
     DISPLAY_NAME,
@@ -126,7 +121,7 @@ const PAGE_FIELDS = {
     SECOND_NAME,
     PHONE
   ],
-  [CHANGE_PASSWORD_PAGE]: [
+  [Routes.CHANGE_PASSWORD_PAGE]: [
     OLD_PASSWORD,
     NEW_PASSWORD,
     REPEAT_PASSWORD

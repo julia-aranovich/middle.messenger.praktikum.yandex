@@ -1,12 +1,16 @@
-<a class="chat-block {{#if unread}}unread{{/if}} {{#if selected}}selected{{/if}}">
+<a class="chat-block {{#if unread_count}}unread{{/if}} {{#if selected}}selected{{/if}}">
   {{{avatar}}}
   <div class="title">{{title}}</div>
   <div class="meta">
     <div class="unread-count-wrapper">
-      {{#if unread}}
-        <div class="unread-count">{{unread}}</div>
+      {{#if unread_count}}
+        <div class="unread-count">{{unread_count}}</div>
       {{/if}}
     </div>
-    <div class="last-updated">{{last_updated}}</div>
+    {{#if last_message}}
+      {{#with last_message}}
+        <span class="last-message">{{date}} {{author}}: {{content}}...</span>
+      {{/with}}
+    {{/if}}
   </div>
 </a>

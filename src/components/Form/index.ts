@@ -1,23 +1,24 @@
 import Block from "../../utils/Block";
-
 import Field from "../Field";
 
 import template from "./form.hbs";
 import "./form.pcss";
 
 export interface FormProps {
-  children?: Record<string, Block>
+  submitButton?: Block,
+  imgButton?: Block,
+  fields: Block[],
+  actions?: Block[],
+  events?: {
+    submit: (e: Event) => void
+  },
+  iconArrowRight?: string,
+  className?: string
 }
 
-export default class Form extends Block {
-  props!: FormProps;
-
-  init() {
-    this.children = {...this.props.children};
-  }
-
-  get data() {
-    return (<Field[]><unknown> this.children.fields).reduce((
+export default class Form extends Block<FormProps> {
+  get data(): Record<string, any> {
+    return (<Field[]> this.children.fields).reduce((
       result: Record<string, string>,
       field: Block
     ) => ({
@@ -26,20 +27,15 @@ export default class Form extends Block {
     }), {});
   }
 
-  logData() {
-    // eslint-disable-next-line no-console
-    console.log(this.data);
-  }
-
   isValid(): boolean {
     let result = true;
-    (<Field[]><unknown> this.children.fields).forEach((field: Block) => {
+    (<Field[]> this.children.fields).forEach((field: Block) => {
       result = (<Field>field).isValid() && result;
     });
     return result;
   }
 
   render() {
-    return this.compile(template, {});
+    return this.compile(template, this.props);
   }
 }

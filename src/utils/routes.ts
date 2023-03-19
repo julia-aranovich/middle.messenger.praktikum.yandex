@@ -1,9 +1,0 @@
-export const LOGIN_PAGE = "login";
-export const REGISTRATION_PAGE = "registration";
-export const PROFILE_PAGE = "profile";
-export const UPDATE_PROFILE_PAGE = "update_profile";
-export const CHANGE_PASSWORD_PAGE = "change_password";
-export const CHAT_LIST_PAGE = "chats";
-export const CHAT_PAGE = "chat";
-export const SERVER_ERROR_PAGE = "server_error";
-export const NOT_FOUND_PAGE = "not_found";

@@ -10,14 +10,18 @@ export const AVATAR_SIZES = {
 };
 
 interface AvatarProps {
-  title?: string,
+  title: string,
+  avatar?: string,
   size?: string
 }
 
-export default class Avatar extends Block {
-  props!: AvatarProps;
-
+export default class Avatar extends Block<AvatarProps> {
   render() {
-    return this.compile(template, {size: AVATAR_SIZES.REGULAR, ...this.props});
+    return this.compile(template, {
+      size: this.props.size || AVATAR_SIZES.REGULAR,
+      avatar: this.props.avatar &&
+        `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}`,
+      title: this.props.title.toUpperCase()
+    });
   }
 }

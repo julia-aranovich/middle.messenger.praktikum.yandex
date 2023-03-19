@@ -1,5 +1,6 @@
 import Block from "../../utils/Block";
 import Input from "../Input";
+import Textarea from "../Textarea";
 
 import template from "./field.hbs";
 import "./field.pcss";
@@ -8,7 +9,7 @@ export interface FieldProps {
   name: string,
   type?: string,
   label?: string,
-  value?: string,
+  value?: string | number,
   placeholder?: string,
   disabled?: boolean,
   mandatory?: boolean,
@@ -16,17 +17,16 @@ export interface FieldProps {
   error_text?: string
 }
 
-export default class Field extends Block {
-  props!: FieldProps;
-
+export default class Field extends Block<FieldProps> {
   init() {
-    this.children.input = new Input({
+    const props = {
       ...this.props,
       events: {
         blur: () => this.isValid(),
         focus: () => this.isValid()
       }
-    });
+    };
+    this.children.input = props.type === "textarea" ? new Textarea(props) : new Input(props);
   }
 
   isValid(): boolean {
@@ -45,7 +45,11 @@ export default class Field extends Block {
   }
 
   getValue(): string {
-    return (<HTMLInputElement> this.getContent().querySelector(`[name=${this.props.name}]`)).value;
+    return ((this.children.input as Block).element as HTMLInputElement).value.trim();
+  }
+
+  setValue(value: string) {
+    ((this.children.input as Block).element as HTMLInputElement).value = value;
   }
 
   render() {

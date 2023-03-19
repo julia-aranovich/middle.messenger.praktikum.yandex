@@ -1,5 +1,9 @@
 <div class="photo-preview">
-  {{#if title}}
+  {{#if avatar}}
+    <div class="img-wrapper img-wrapper__{{size}}">
+      <img src="{{avatar}}" crossorigin="use-credentials" alt="{{title}}" />
+    </div>
+  {{else}}
     <div class="default-photo default-photo__{{size}}">
       {{title.[0]}}
     </div>

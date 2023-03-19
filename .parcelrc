@@ -4,6 +4,7 @@
     "*.hbs": ["@anikin/parcel-transformer-handlebars-precompile"]
   },
   "validators": {
-    "*.ts": ['@parcel/validator-typescript']
+    "*.ts": ["@parcel/validator-typescript"]
   }
 }
+

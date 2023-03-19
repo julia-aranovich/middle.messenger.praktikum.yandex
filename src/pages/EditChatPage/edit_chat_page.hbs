@@ -1,0 +1,29 @@
+<div>
+  <div id="chat-list-container">
+    {{{sidebar}}}
+    <div id="chat-view">
+      <div class="chat-title-container">
+        {{{avatar}}}
+        <div class="title">
+          <div>
+            {{selectedChat.title}}
+          </div>
+          <div class="manage-link">
+            {{{deleteChatLink}}}
+            &bull;
+            {{{chageAvatarLink}}}
+          </div>
+        </div>
+      </div>
+      {{{addMemberForm}}}
+      <h4>Список участников:</h4>
+      <ol class="members">
+        {{#each members}}
+        {{{this}}}
+        {{/each}}
+      </ol>
+    </div>
+    
+  </div>
+  {{{changeAvatarModal}}}
+</div>

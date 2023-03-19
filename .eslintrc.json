@@ -8,6 +8,9 @@
   "rules": {
     "quotes": ["error", "double"],
     "@typescript-eslint/quotes": ["error", "double"],
+    "max-classes-per-file": 0,
+    "prefer-promise-reject-errors": 0,
+    "no-restricted-syntax": 0,
     "default-param-last": 0,
     "one-var": ["error", {"let": "consecutive", "const": "never"}],
     "one-var-declaration-per-line": ["error", "initializations"],
@@ -19,7 +22,9 @@
     "class-methods-use-this": 0,
     "comma-dangle": ["error", "never"],
     "@typescript-eslint/comma-dangle": ["error", "never"],
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-param-reassign": ["error", { "props": false }]
   },
   "env": {
     "browser": true

@@ -1,0 +1,14 @@
+<li>
+  {{#with user}}
+    <span>{{first_name}} {{second_name}} ({{login}})</span>
+  {{/with}}
+  {{#if addMode}}
+    {{#if alreadyAdded}}
+      <span class="no-items" style="display: inline !important">Уже добавлен</span>
+    {{else}}
+      {{{addLink}}}
+    {{/if}}
+  {{else}}
+    {{{deleteLink}}}
+  {{/if}}
+</li>

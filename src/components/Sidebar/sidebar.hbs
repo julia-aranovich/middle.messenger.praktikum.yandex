@@ -3,9 +3,22 @@
     {{{profileLink}}}
   </div>
   {{{searchForm}}}
+  {{{createForm}}}
   <div class="chat-blocks">
-    {{#each chats}}
-      {{{this}}}
-    {{/each}}
+    {{#if chats.length}}
+      {{#each chats}}
+        {{{this}}}
+      {{/each}}
+    {{else}}
+      {{#if isLoaded}}
+        {{#if search}}
+        <span class="no-items">Чатов не найдено</span>
+        {{else}}
+        <span class="no-items">Чатов не создано</span>
+        {{/if}}
+      {{else}}
+        <span class="no-items">Загрузка...</span>
+      {{/if}}
+    {{/if}}
   </div>
 </div>

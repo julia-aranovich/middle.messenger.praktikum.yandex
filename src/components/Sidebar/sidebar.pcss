@@ -7,7 +7,8 @@
     text-align: right;
     padding: 0 0 0.5em;
 
-    button {
+    a {
+      display: inline-block;
       width: fit-content;
     }
   }
@@ -16,5 +17,20 @@
     overflow-y: scroll;
     margin: 0;
     padding: 0;
+  }
+
+  .create-chat-form {
+    background: #eee;
+    border-radius: 10pt;
+    padding: 1em;
+    margin-bottom: 1.5em;
+
+    .field {
+      margin: 0;
+
+      &:first-child {
+        display: none;
+      }
+    }
   }
 }
