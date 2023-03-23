@@ -24,7 +24,9 @@
     "@typescript-eslint/comma-dangle": ["error", "never"],
     "no-underscore-dangle": 0,
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "no-param-reassign": ["error", { "props": false }]
+    "no-param-reassign": ["error", { "props": false }],
+    "@typescript-eslint/no-unused-expressions": 0,
+    "import/no-named-as-default": 0
   },
   "env": {
     "browser": true

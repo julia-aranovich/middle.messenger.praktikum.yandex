@@ -102,6 +102,12 @@ export default class Block<P extends Record<string, any> = any> {
 
   private _componentDidMount(): void {
     this.componentDidMount();
+  }
+
+  protected componentDidMount(): void {}
+
+  public dispatchComponentDidMount(): void {
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
     Object.values(this.children).forEach((child: Block | Block[]) => {
       if (Array.isArray(child)) {
@@ -114,18 +120,12 @@ export default class Block<P extends Record<string, any> = any> {
     });
   }
 
-  protected componentDidMount(): void {}
-
-  public dispatchComponentDidMount(): void {
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-  }
-
   private _componentDidUpdate(oldProps: P, newProps: P): void {
     const response: boolean = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
     }
-    this._render();
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
   protected componentDidUpdate(_oldProps: P, _newProps: P): boolean {
@@ -162,7 +162,7 @@ export default class Block<P extends Record<string, any> = any> {
 
   private _render(): void {
     const fragment = this.render();
-    const newElement = (fragment as DocumentFragment).firstElementChild as HTMLElement;
+    const newElement = fragment.firstElementChild as HTMLElement;
     if (this._element) {
       this._removeEvents();
       this._element.replaceWith(newElement);
@@ -171,8 +171,8 @@ export default class Block<P extends Record<string, any> = any> {
     this._addEvents();
   }
 
-  protected render(): DocumentFragment | null {
-    return null;
+  protected render(): DocumentFragment {
+    return new DocumentFragment();
   }
 
   getContent() {

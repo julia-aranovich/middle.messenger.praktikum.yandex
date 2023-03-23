@@ -13,6 +13,9 @@ import NotFoundPage from "./pages/NotFoundPage";
 import AuthController from "./controllers/AuthController";
 import store from "./utils/storage";
 
+import "./styles/colors.pcss";
+import "./styles/styles.pcss";
+
 window.addEventListener("DOMContentLoaded", async () => {
   router
     .use(Routes.LOGIN_PAGE, LoginPage)

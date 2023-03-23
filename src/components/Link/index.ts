@@ -8,14 +8,13 @@ import withRouter, {PropsWithRouter} from "../../hocs/withRouter";
 interface LinkProps extends PropsWithRouter {
   to: string,
   text: string,
-  disabled?: boolean,
   compact?: boolean,
-  events: {
+  events?: {
     click: () => void
   }
 }
 
-class Link extends Block<LinkProps> {
+export class Link extends Block<LinkProps> {
   constructor(props: LinkProps) {
     super({
       ...props,
