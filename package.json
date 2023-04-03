@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "parcel static/index.html --no-cache --open",
     "server": "node server.js",
     "build": "node ./node_modules/.bin/webpack",
     "start": "npm-run-all build server",
-    "start:dev": "node ./node_modules/.bin/webpack serve",
+    "dev": "node ./node_modules/.bin/webpack serve",
     "lint:code": "node_modules/.bin/eslint . --ext .js,.ts",
     "lint:styles": "node_modules/.bin/stylelint \"**/*.pcss\"",
     "lint": "npm-run-all lint:*",
