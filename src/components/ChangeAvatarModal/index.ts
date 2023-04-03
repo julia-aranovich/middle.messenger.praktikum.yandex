@@ -2,7 +2,7 @@ import Block from "../../utils/Block";
 import Button from "../Button";
 
 import UserController from "../../controllers/UserController";
-import ChatsController from "../../controllers/ChatsController";
+import {ChatsController} from "../../controllers/ChatsController";
 
 import template from "./change_avatar_modal.hbs";
 import "./change_avatar_modal.pcss";

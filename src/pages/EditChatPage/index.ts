@@ -6,7 +6,7 @@ import "./edit_chat_page.pcss";
 import {State} from "../../utils/storage";
 import withStore from "../../hocs/withStore";
 import withControllers from "../../hocs/withControllers";
-import ChatsController from "../../controllers/ChatsController";
+import {ChatsController} from "../../controllers/ChatsController";
 
 import Avatar, {AVATAR_SIZES} from "../../components/Avatar";
 import Button from "../../components/Button";

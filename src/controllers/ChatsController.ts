@@ -4,7 +4,7 @@ import store from "../utils/storage";
 import MessagesController from "./MessagesController";
 import {ErrorWithReason} from "../utils/types";
 
-class ChatsController {
+export default class ChatController {
   private readonly _api: ChatsAPI;
 
   constructor() {
@@ -105,4 +105,4 @@ class ChatsController {
   }
 }
 
-export default new ChatsController();
+export const ChatsController = new ChatController();

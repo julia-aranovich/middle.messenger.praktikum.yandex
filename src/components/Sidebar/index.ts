@@ -10,7 +10,7 @@ import withStore from "../../hocs/withStore";
 import {State} from "../../utils/storage";
 import Button from "../Button";
 import withControllers from "../../hocs/withControllers";
-import ChatsController from "../../controllers/ChatsController";
+import {ChatsController} from "../../controllers/ChatsController";
 import {ChatInfo} from "../../api/ChatsAPI";
 import {Routes} from "../../utils/navigation";
 import Link from "../Link";
