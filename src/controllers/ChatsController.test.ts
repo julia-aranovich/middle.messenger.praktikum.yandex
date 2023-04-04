@@ -42,7 +42,7 @@ const {default: ChatController} = proxyquire("./ChatsController", {
   }
 }) as {default: typeof ChatControllerType};
 
-describe.only("ChatsController", () => {
+describe("ChatsController", () => {
   let ChatsControllertMock: ChatControllerType;
   const chatsPath = "chats";
   const chatUsersPath = "selectedChatUsers";
@@ -67,6 +67,7 @@ describe.only("ChatsController", () => {
     APIMock.getToken.reset();
     APIMock.getToken.withArgs(chatId).returns(mockedToken);
     storeMock.set.reset();
+    MessagesControllerMock.connect.reset();
   });
 
   it(".createChat() should call API.create() with passed title", async () => {
@@ -142,7 +143,7 @@ describe.only("ChatsController", () => {
     expect(storeMock.set.callCount).to.eq(1); // check there was no error when fetching chats
   });
 
-  it.only(".fetchChats() should throw error when fetching with invalid filter", async () => {
+  it(".fetchChats() should throw error when fetching with invalid filter", async () => {
     await ChatsControllertMock.fetchChats(invalidFilter);
 
     expect(APIMock.read.callCount).to.eq(1);
