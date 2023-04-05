@@ -2,6 +2,5 @@
 .editorconfig
 .idea/
 .github/
-.husky/
 node_modules/
 dist/
