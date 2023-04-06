@@ -1,7 +1,6 @@
 .DS_Store
 .editorconfig
 .idea/
-.parcel-cache/
 .github/
 node_modules/
 dist/

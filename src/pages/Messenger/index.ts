@@ -10,7 +10,7 @@ import "./messenger.pcss";
 import {State} from "../../utils/storage";
 import withStore from "../../hocs/withStore";
 import withControllers from "../../hocs/withControllers";
-import ChatsController from "../../controllers/ChatsController";
+import {ChatsController} from "../../controllers/ChatsController";
 import MessagesController from "../../controllers/MessagesController";
 
 import Avatar, {AVATAR_SIZES} from "../../components/Avatar";

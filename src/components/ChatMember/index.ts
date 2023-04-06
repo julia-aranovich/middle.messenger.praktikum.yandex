@@ -1,6 +1,6 @@
 import withControllers from "../../hocs/withControllers";
 import withStore from "../../hocs/withStore";
-import ChatsController from "../../controllers/ChatsController";
+import {ChatsController} from "../../controllers/ChatsController";
 import Block from "../../utils/Block";
 import Button from "../Button";
 
